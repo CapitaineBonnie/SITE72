@@ -20,7 +20,6 @@
 body{min-height:100vh;background:radial-gradient(ellipse at top,#0a2338 0%,var(--bg) 60%);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;}
 .scanline{position:fixed;inset:0;pointer-events:none;z-index:100;background:repeating-linear-gradient(to bottom,rgba(95,212,255,.022) 0px,rgba(95,212,255,.022) 1px,transparent 1px,transparent 3px);mix-blend-mode:screen;}
 h1,h2,h3,h4{font-family:'Space Mono',monospace;color:#eaf6ff;}
-.mono{font-family:'Space Mono',monospace;}
 .eyebrow{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--acc);text-transform:uppercase;}
 
 /* LOGIN */
@@ -29,15 +28,18 @@ h1,h2,h3,h4{font-family:'Space Mono',monospace;color:#eaf6ff;}
 .lcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--acc),transparent);}
 .lcard h1{font-size:20px;margin:8px 0 28px;}
 label{display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:6px;}
-input[type=text],input[type=password],input[type=file],textarea{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);font-family:'IBM Plex Sans';font-size:14px;padding:11px 12px;border-radius:3px;margin-bottom:14px;}
+input[type=text],input[type=password],input[type=file],textarea,select{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);font-family:'IBM Plex Sans';font-size:14px;padding:11px 12px;border-radius:3px;margin-bottom:14px;}
 input[type=file]{padding:8px;font-size:12px;cursor:pointer;}
+select option{background:var(--panel);}
 textarea{min-height:90px;resize:vertical;line-height:1.6;}
-input:focus,textarea:focus{outline:2px solid var(--accB);outline-offset:1px;}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--accB);outline-offset:1px;}
 .btn{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;background:transparent;border:1px solid var(--acc);color:var(--accB);padding:11px 18px;border-radius:3px;cursor:pointer;width:100%;transition:background .15s;}
 .btn:hover{background:rgba(47,168,209,.13);}
 .btn.sm{width:auto;padding:7px 13px;font-size:10px;}
 .btn.ghost{border-color:var(--line);color:var(--dim);}
 .btn.ghost:hover{border-color:var(--acc);color:var(--accB);}
+.btn.danger{border-color:var(--danger);color:var(--danger);}
+.btn.danger:hover{background:rgba(255,157,157,.1);}
 .btn.guest{margin-top:10px;border-color:var(--line);color:var(--dim);}
 .btn.guest:hover{border-color:var(--acc);color:var(--accB);}
 .divider{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--dim);font-size:12px;}
@@ -53,80 +55,81 @@ header.top{display:flex;justify-content:space-between;align-items:flex-end;flex-
 .lnk:hover{color:var(--accB);}
 
 /* CARDS */
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;}
-.card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:4px;padding:20px;cursor:pointer;transition:border-color .15s,transform .1s;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;}
+.card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:4px;padding:18px;cursor:pointer;transition:border-color .15s,transform .1s;}
 .card:hover{border-color:var(--acc);transform:translateY(-2px);}
-.card .tag{font-family:'Space Mono',monospace;font-size:10px;color:var(--acc);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
-.card h3{font-size:15px;margin-bottom:6px;}
-.card p{font-size:12px;color:var(--dim);}
+.card .tag{font-family:'Space Mono',monospace;font-size:10px;color:var(--acc);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.card h3{font-size:14px;margin-bottom:5px;}
+.card p{font-size:11.5px;color:var(--dim);}
 
 /* SECTION */
 #secView{display:none;margin-top:4px;}
 .sec-panel{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:4px;padding:24px;margin-bottom:16px;}
 .presBox{font-size:13.5px;line-height:1.7;color:var(--ink);border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:20px;}
+.sec-actions{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
 
 /* GRID */
-.igrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;}
+.igrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;}
 .icard{background:var(--bg);border:1px solid var(--line);border-radius:4px;cursor:pointer;overflow:hidden;transition:border-color .15s,transform .1s;}
 .icard:hover{border-color:var(--acc);transform:translateY(-2px);}
-.icard img{width:100%;height:115px;object-fit:cover;display:block;background:#07111d;}
-.icard .ii{padding:10px 11px;}
-.icard .iname{font-family:'Space Mono',monospace;font-size:11.5px;color:var(--accB);}
-.icard .isub{font-size:11px;color:var(--dim);margin-top:3px;}
-.badge{display:inline-block;font-family:'Space Mono',monospace;font-size:9px;padding:3px 7px;border-radius:2px;border:1px solid;margin-top:5px;letter-spacing:.04em;text-transform:uppercase;}
+.icard img{width:100%;height:110px;object-fit:cover;display:block;background:#07111d;}
+.icard .noimg{width:100%;height:110px;background:#07111d;display:flex;align-items:center;justify-content:center;}
+.icard .noimg span{font-family:'Space Mono',monospace;font-size:10px;color:var(--dim);}
+.icard .ii{padding:9px 10px;}
+.icard .iname{font-family:'Space Mono',monospace;font-size:11px;color:var(--accB);}
+.badge{display:inline-block;font-family:'Space Mono',monospace;font-size:9px;padding:3px 7px;border-radius:2px;border:1px solid;margin-top:4px;letter-spacing:.04em;text-transform:uppercase;}
 .badge.sur{color:var(--green);background:var(--gbg);border-color:var(--green);}
 .badge.euclide{color:var(--yel);background:var(--ybg);border-color:var(--yel);}
 .badge.keter{color:var(--red);background:var(--rbg);border-color:var(--red);}
 .badge.thaumiel{color:var(--pur);background:var(--pbg);border-color:var(--pur);}
 
+/* LOADING */
+.loading{font-family:'Space Mono',monospace;font-size:12px;color:var(--dim);padding:20px 0;text-align:center;}
+.sync-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--acc);margin-right:6px;animation:pulse 1.2s infinite;}
+@keyframes pulse{0%,100%{opacity:.3;}50%{opacity:1;}}
+
 /* MODAL */
-.moverlay{position:fixed;inset:0;background:rgba(4,13,23,.9);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;}
-.mbox{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--acc);border-radius:4px;max-width:640px;width:100%;max-height:90vh;overflow-y:auto;position:relative;}
+.moverlay{position:fixed;inset:0;background:rgba(4,13,23,.9);z-index:300;display:flex;align-items:center;justify-content:center;padding:16px;}
+.mbox{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--acc);border-radius:4px;max-width:640px;width:100%;max-height:92vh;overflow-y:auto;position:relative;}
 .mbox::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--acc),transparent);}
 .mclose{position:absolute;top:12px;right:14px;background:transparent;border:none;color:var(--dim);font-size:18px;cursor:pointer;font-family:'Space Mono',monospace;z-index:10;}
 .mclose:hover{color:var(--accB);}
-.minner{padding:28px;}
-.mimg{width:100%;max-height:260px;object-fit:cover;border-radius:3px;margin-bottom:18px;display:block;}
+.minner{padding:26px;}
+.mimg{width:100%;max-height:260px;object-fit:cover;border-radius:3px;margin-bottom:16px;display:block;}
 .mimg.person{max-height:200px;object-fit:contain;background:#07111d;}
 .mbox h3{font-size:17px;margin-bottom:4px;}
-.mrole{font-family:'Space Mono',monospace;font-size:11px;color:var(--acc);margin-bottom:14px;}
+.mrole{font-family:'Space Mono',monospace;font-size:11px;color:var(--acc);margin-bottom:12px;}
 .mdesc{font-size:13.5px;line-height:1.7;color:var(--ink);}
-.mmeta{font-family:'Space Mono',monospace;font-size:11px;color:var(--dim);border-top:1px solid var(--line);margin-top:16px;padding-top:14px;}
-.flagged-note{font-family:'Space Mono',monospace;font-size:11px;color:var(--warn);background:#3a2510;border:1px solid #a6631c;border-radius:3px;padding:8px 12px;margin-bottom:14px;}
-
-/* EDIT */
-.esec{border-top:1px solid var(--line);margin-top:20px;padding-top:18px;}
-.esec h4{font-family:'Space Mono',monospace;font-size:11px;color:var(--acc);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;}
+.mmeta{font-family:'Space Mono',monospace;font-size:11px;color:var(--dim);border-top:1px solid var(--line);margin-top:14px;padding-top:12px;}
+.flagged-note{font-family:'Space Mono',monospace;font-size:11px;color:var(--warn);background:#3a2510;border:1px solid #a6631c;border-radius:3px;padding:8px 12px;margin-bottom:12px;}
+.esec{border-top:1px solid var(--line);margin-top:18px;padding-top:16px;}
+.esec h4{font-family:'Space Mono',monospace;font-size:11px;color:var(--acc);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;}
 .img-preview{width:100%;max-height:160px;object-fit:cover;border-radius:3px;margin-bottom:10px;display:none;}
-.eactions{display:flex;gap:8px;flex-wrap:wrap;}
+.eactions{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
 
 /* NEWS */
-.news-section{margin-top:32px;}
-.news-section h2{font-size:15px;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.news-section{margin-top:28px;}
+.news-section h2{font-size:14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
 .news-section h2::after{content:'';flex:1;height:1px;background:var(--line);}
-.news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:8px;}
+.news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:10px;}
 .news-card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:4px;overflow:hidden;cursor:pointer;transition:border-color .15s,transform .1s;}
 .news-card:hover{border-color:var(--acc);transform:translateY(-2px);}
-.news-card img{width:100%;height:140px;object-fit:cover;display:block;background:#07111d;}
-.news-card .nc{padding:14px;}
-.news-card .ndate{font-family:'Space Mono',monospace;font-size:10px;color:var(--acc);letter-spacing:.08em;margin-bottom:6px;}
-.news-card .ntitle{font-family:'Space Mono',monospace;font-size:13px;color:#eaf6ff;margin-bottom:6px;}
+.news-card img{width:100%;height:130px;object-fit:cover;display:block;background:#07111d;}
+.news-card .nc{padding:12px;}
+.news-card .ndate{font-family:'Space Mono',monospace;font-size:10px;color:var(--acc);margin-bottom:5px;}
+.news-card .ntitle{font-family:'Space Mono',monospace;font-size:12.5px;color:#eaf6ff;margin-bottom:5px;}
 .news-card .nexc{font-size:12px;color:var(--dim);line-height:1.5;}
-.news-add{display:inline-flex;align-items:center;gap:7px;font-family:'Space Mono',monospace;font-size:10.5px;color:var(--dim);border:1px dashed var(--line);border-radius:3px;padding:8px 14px;cursor:pointer;margin-top:4px;transition:border-color .15s,color .15s;}
+.news-add{display:inline-flex;align-items:center;gap:7px;font-family:'Space Mono',monospace;font-size:10.5px;color:var(--dim);border:1px dashed var(--line);border-radius:3px;padding:8px 14px;cursor:pointer;transition:border-color .15s,color .15s;}
 .news-add:hover{border-color:var(--acc);color:var(--accB);}
 
 /* SOCIAL */
-.social-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:28px;padding:18px 20px;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:4px;}
-.social-bar .sl{font-family:'Space Mono',monospace;font-size:10.5px;color:var(--dim);letter-spacing:.07em;text-transform:uppercase;margin-right:6px;}
-.social-btn{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:11px;color:var(--accB);border:1px solid var(--line);border-radius:3px;padding:8px 14px;text-decoration:none;transition:border-color .15s,background .15s;}
+.social-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:24px;padding:16px 18px;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:4px;}
+.social-bar .sl{font-family:'Space Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:.07em;text-transform:uppercase;}
+.social-btn{display:inline-flex;align-items:center;gap:7px;font-family:'Space Mono',monospace;font-size:11px;color:var(--accB);border:1px solid var(--line);border-radius:3px;padding:7px 13px;text-decoration:none;transition:border-color .15s,background .15s;}
 .social-btn:hover{border-color:var(--acc);background:rgba(47,168,209,.1);}
-.social-btn svg{flex-shrink:0;}
 
-footer{text-align:center;font-family:'Space Mono',monospace;font-size:10.5px;color:var(--dim);margin-top:50px;letter-spacing:.05em;}
-
-/* NEWS MODAL extra */
-.nimg-full{width:100%;max-height:280px;object-fit:cover;border-radius:3px;margin-bottom:18px;display:block;}
-
+footer{text-align:center;font-family:'Space Mono',monospace;font-size:10px;color:var(--dim);margin-top:40px;letter-spacing:.05em;}
+.nimg-full{width:100%;max-height:280px;object-fit:cover;border-radius:3px;margin-bottom:16px;display:block;}
 </style>
 </head>
 <body>
@@ -153,45 +156,26 @@ footer{text-align:center;font-family:'Space Mono',monospace;font-size:10.5px;col
   <header class="top">
     <div>
       <div class="eyebrow">Site-72</div>
-      <h1 style="font-size:21px;">Portail du personnel</h1>
+      <h1 style="font-size:20px;">Portail du personnel</h1>
     </div>
     <div class="who">
-      Connecté : <b id="whoName"></b> <span id="whoRole"></span>
+      <span class="sync-dot"></span>En ligne · <b id="whoName"></b> <span id="whoRole"></span>
       <br><span class="lnk" onclick="logout()">↩ Déconnexion</span>
     </div>
   </header>
 
   <div class="cards" id="cardsHome">
-    <div class="card" onclick="openSection('scp')">
-      <div class="tag">Index complet</div>
-      <h3>Tous les SCP</h3>
-      <p>Objets anomaux sous contrôle — Site-72.</p>
-    </div>
-    <div class="card" onclick="openSection('securite')">
-      <div class="tag">Département</div>
-      <h3>Département Sécuritaire</h3>
-      <p>Personnel de sécurité, FIM, unités CAPT.</p>
-    </div>
-    <div class="card" onclick="openSection('scientifique')">
-      <div class="tag">Département</div>
-      <h3>Département Scientifique</h3>
-      <p>Chercheurs, superviseurs, direction scientifique.</p>
-    </div>
-    <div class="card" onclick="openSection('medical')">
-      <div class="tag">Département</div>
-      <h3>Département Médical</h3>
-      <p>Personnel médical et suivi de santé.</p>
-    </div>
-    <div class="card" onclick="openSection('horsfondation')">
-      <div class="tag">Externe</div>
-      <h3>Hors Fondation</h3>
-      <p>Classe-D, groupes d'intérêt et entités externes.</p>
-    </div>
+    <div class="card" onclick="openSection('scp')"><div class="tag">Index</div><h3>Tous les SCP</h3><p>Objets anomaux sous contrôle.</p></div>
+    <div class="card" onclick="openSection('securite')"><div class="tag">Département</div><h3>Sécurité</h3><p>SIS, SIP, FIM, CAPT, Papillon.</p></div>
+    <div class="card" onclick="openSection('scientifique')"><div class="tag">Département</div><h3>Scientifique</h3><p>Chercheurs, superviseurs, direction.</p></div>
+    <div class="card" onclick="openSection('medical')"><div class="tag">Département</div><h3>Médical</h3><p>Personnel médical du site.</p></div>
+    <div class="card" onclick="openSection('horsfondation')"><div class="tag">Externe</div><h3>Hors Fondation</h3><p>Classe-D, groupes d'intérêt.</p></div>
   </div>
 
   <div id="secView">
-    <div style="margin-bottom:16px;">
-      <span class="lnk" onclick="goHome()">← Retour aux catégories</span>
+    <div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+      <span class="lnk" onclick="goHome()">← Retour</span>
+      <button class="btn sm" id="addItemBtn" onclick="openItemEditor(-1)" style="display:none;">+ Ajouter</button>
     </div>
     <div class="sec-panel">
       <div class="presBox" id="presBox"></div>
@@ -200,73 +184,137 @@ footer{text-align:center;font-family:'Space Mono',monospace;font-size:10.5px;col
   </div>
 
   <!-- NEWS -->
-  <div id="newsSection" class="news-section" style="display:none;">
-    <h2>Actualités du Site-72</h2>
-    <div class="news-grid" id="newsGrid"></div>
-    <div id="newsAddBtn" class="news-add" onclick="openNewsEditor(-1)" style="display:none;">+ Publier une actualité</div>
+  <div id="newsSection" style="display:none;">
+    <div class="news-section">
+      <h2>Actualités du Site-72</h2>
+      <div class="news-grid" id="newsGrid"></div>
+      <div id="newsAddBtn" class="news-add" onclick="openNewsEditor(null)" style="display:none;">+ Publier une actualité</div>
+    </div>
+    <div class="social-bar">
+      <span class="sl">Suivre</span>
+      <a class="social-btn" href="https://discord.gg/NUJQDbBZC5" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+        Discord
+      </a>
+      <a class="social-btn" href="https://www.tiktok.com/@capitainebonnie" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+        TikTok
+      </a>
+      <a class="social-btn" href="https://www.youtube.com/@CapitaineBonnie1er" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        YouTube
+      </a>
+    </div>
   </div>
 
-  <!-- SOCIAL -->
-  <div id="socialBar" class="social-bar" style="display:none;">
-    <span class="sl">Nous suivre</span>
-    <a class="social-btn" href="https://discord.gg/NUJQDbBZC5" target="_blank">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
-      Discord
-    </a>
-    <a class="social-btn" href="https://www.tiktok.com/@capitainebonnie?is_from_webapp=1&sender_device=pc" target="_blank">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
-      TikTok
-    </a>
-    <a class="social-btn" href="https://www.youtube.com/@CapitaineBonnie1er" target="_blank">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-      YouTube
-    </a>
-  </div>
+  <footer>SITE-72 · FONDATION SCP · TOUTE MODIFICATION EST JOURNALISÉE ET VISIBLE EN TEMPS RÉEL</footer>
+</div>
 
-  <footer>SITE-72 · FONDATION SCP · TOUTE MODIFICATION EST JOURNALISÉE</footer>
+<!-- MODAL ITEM -->
+<div class="moverlay" id="moverlay" style="display:none;" onclick="overlayClick(event)">
+  <div class="mbox"><button class="mclose" onclick="closeModal()">✕</button><div class="minner" id="minner"></div></div>
+</div>
 
-  <!-- NEWS EDITOR MODAL -->
-  <div class="moverlay" id="newsEditorOverlay" style="display:none;" onclick="newsOverlayClick(event)">
-    <div class="mbox" style="max-width:560px;">
-      <button class="mclose" onclick="closeNewsEditor()">✕</button>
-      <div class="minner">
-        <h3 style="margin-bottom:18px;" id="newsEditorTitle">Nouvelle actualité</h3>
-        <label>Titre</label>
-        <input type="text" id="ne-title" placeholder="Titre de l'actualité">
-        <label>Date</label>
-        <input type="text" id="ne-date" placeholder="ex: 22 juillet 2026">
-        <label>Contenu</label>
-        <textarea id="ne-body" style="min-height:120px;" placeholder="Contenu de l'actualité..."></textarea>
-        <label>Image — uploader un fichier</label>
-        <input type="file" id="ne-file" accept="image/*" onchange="previewNewsImg(this)">
-        <img id="ne-preview" class="img-preview">
-        <div class="eactions" style="margin-top:8px;">
-          <button class="btn sm" onclick="saveNews()">Publier</button>
-          <button class="btn sm ghost" onclick="closeNewsEditor()">Annuler</button>
-          <button class="btn sm ghost" id="ne-delete" onclick="deleteNews()" style="display:none;color:var(--danger);border-color:var(--danger);">Supprimer</button>
-        </div>
+<!-- MODAL ITEM EDITOR -->
+<div class="moverlay" id="editorOverlay" style="display:none;" onclick="editorOverlayClick(event)">
+  <div class="mbox" style="max-width:560px;">
+    <button class="mclose" onclick="closeEditor()">✕</button>
+    <div class="minner">
+      <h3 style="margin-bottom:18px;" id="editorTitle">Nouvel élément</h3>
+      <label>Nom / Identifiant</label>
+      <input type="text" id="e-name" placeholder="Ex: SCP-999 ou Chercheur">
+      <div id="e-classe-wrap">
+        <label>Classe SCP</label>
+        <select id="e-classe">
+          <option value="sur">Sûr</option>
+          <option value="euclide">Euclide</option>
+          <option value="keter">Keter</option>
+          <option value="thaumiel">Thaumiel</option>
+        </select>
+      </div>
+      <label>Description</label>
+      <textarea id="e-desc" placeholder="Description complète..."></textarea>
+      <label>Métadonnées</label>
+      <input type="text" id="e-meta" placeholder="Ex: Classe : Sûr — Procédure : ...">
+      <label>Image — uploader un fichier</label>
+      <input type="file" id="e-file" accept="image/*" onchange="previewEditorImg(this)">
+      <img id="e-preview" class="img-preview">
+      <div class="eactions">
+        <button class="btn sm" onclick="saveItem()">Enregistrer</button>
+        <button class="btn sm ghost" onclick="closeEditor()">Annuler</button>
+        <button class="btn sm danger" id="e-delete" onclick="deleteItem()" style="display:none;">Supprimer</button>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- NEWS VIEW MODAL -->
-  <div class="moverlay" id="newsViewOverlay" style="display:none;" onclick="newsViewClick(event)">
-    <div class="mbox" style="max-width:600px;">
-      <button class="mclose" onclick="closeNewsView()">✕</button>
-      <div class="minner" id="newsViewInner"></div>
+<!-- MODAL NEWS EDITOR -->
+<div class="moverlay" id="newsEditorOverlay" style="display:none;" onclick="newsEditorOverlayClick(event)">
+  <div class="mbox" style="max-width:540px;">
+    <button class="mclose" onclick="closeNewsEditor()">✕</button>
+    <div class="minner">
+      <h3 style="margin-bottom:18px;" id="newsEditorTitle">Nouvelle actualité</h3>
+      <label>Titre</label>
+      <input type="text" id="ne-title" placeholder="Titre de l'actualité">
+      <label>Date</label>
+      <input type="text" id="ne-date">
+      <label>Contenu</label>
+      <textarea id="ne-body" style="min-height:120px;" placeholder="Contenu..."></textarea>
+      <label>Image</label>
+      <input type="file" id="ne-file" accept="image/*" onchange="previewNewsImg(this)">
+      <img id="ne-preview" class="img-preview">
+      <div class="eactions">
+        <button class="btn sm" onclick="saveNews()">Publier</button>
+        <button class="btn sm ghost" onclick="closeNewsEditor()">Annuler</button>
+        <button class="btn sm danger" id="ne-delete" onclick="deleteNews()" style="display:none;">Supprimer</button>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL -->
-<div class="moverlay" id="moverlay" style="display:none;" onclick="overlayClick(event)">
-  <div class="mbox" id="mbox">
-    <button class="mclose" onclick="closeModal()">✕</button>
-    <div class="minner" id="minner"></div>
+<!-- MODAL NEWS VIEW -->
+<div class="moverlay" id="newsViewOverlay" style="display:none;" onclick="newsViewOverlayClick(event)">
+  <div class="mbox" style="max-width:600px;">
+    <button class="mclose" onclick="closeNewsView()">✕</button>
+    <div class="minner" id="newsViewInner"></div>
   </div>
 </div>
 
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, doc, getDocs, addDoc, setDoc, deleteDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBaoDKrtIJO8dLSnKw0puoLS5QjM1uZx_g",
+  authDomain: "site72-77f10.firebaseapp.com",
+  projectId: "site72-77f10",
+  storageBucket: "site72-77f10.firebasestorage.app",
+  messagingSenderId: "709748220198",
+  appId: "1:709748220198:web:06c3266d0790451f8361e7",
+  measurementId: "G-DKL4B0W0YE"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+window._db = db;
+window._col = collection;
+window._doc = doc;
+window._getDocs = getDocs;
+window._addDoc = addDoc;
+window._setDoc = setDoc;
+window._deleteDoc = deleteDoc;
+window._onSnapshot = onSnapshot;
+window._query = query;
+window._orderBy = orderBy;
+window._fbReady = true;
+window.dispatchEvent(new Event("fbReady"));
+</script>
+
 <script>
+/* ============================================================
+   COMPTES
+============================================================ */
 const ACCOUNTS = {
   "Invité13":   {password:"user13CB", role:"Invité",     canEdit:false},
   "Modération": {password:"72STAFF",  role:"Modération", canEdit:true},
@@ -276,146 +324,21 @@ const ACCOUNTS = {
 
 let CU = null;
 let curSec = null;
-let modalKey = null;
-let modalIdx = null;
+let editingId = null;
+let editingNewsId = null;
+let currentNewsId = null;
+let unsubItems = null;
+let unsubNews = null;
 
 /* ============================================================
-   DONNÉES
+   SECTIONS META
 ============================================================ */
-const DATA = {
-  scp:{
-    presentation:"Index des objets anomaux actuellement confinés sous la juridiction du Site-72. Cliquez sur un objet pour accéder à sa fiche de confinement. Les dossiers Keter requièrent une habilitation de niveau 3 minimum.",
-    isSCP:true,
-    items:[
-      {
-        id:"SCP-999", classe:"sur",
-        img:"",
-        imgDefault:"https://scp-wiki.wdfiles.com/local--files/scp-999/SCP999.jpg",
-        desc:"SCP-999 se présente sous la forme d'une masse gélatineuse de couleur orange translucide, d'un poids approximatif de 60 kilogrammes. L'entité se déplace par reptation et manifeste un comportement sociable et affectueux envers tout être humain à sa portée. Tout contact cutané avec SCP-999 provoque une élévation immédiate de l'humeur, accompagnée d'un sentiment de bien-être durable pouvant persister plusieurs heures. Aucun effet secondaire néfaste n'a été observé à ce jour. L'entité est omnivore, avec une préférence marquée pour les confiseries sucrées. SCP-999 semble incapable d'agressivité et n'a jamais causé de blessure. Niveau de dangerosité : nul. Utilité thérapeutique potentielle en cours d'évaluation.",
-        meta:"Classe : Sûr — Procédure : Chambre standard, accès libre au personnel autorisé"
-      },
-      {
-        id:"SCP-409", classe:"keter",
-        img:"",
-        imgDefault:"https://scp-wiki.wdfiles.com/local--files/scp-409/409.jpg",
-        desc:"SCP-409 est un cristal de quartz de 45 cm de longueur, d'apparence ordinaire. Son anomalie réside dans une propriété de transmission cristalline : tout contact physique direct avec l'objet déclenche un processus de cristallisation progressive sur le tissu biologique exposé. La minéralisation progresse à un rythme de 2 à 4 cm par heure et conduit à une pétrification complète du sujet entre 3 et 6 heures après contact. Les formations cristallines résultantes sont elles-mêmes infectieuses au toucher. Aucun traitement de réversion n'a été identifié. Toute manipulation doit être effectuée exclusivement par bras robotisés télécommandés. L'accès à la chambre de confinement est interdit sans autorisation explicite du directeur de site.",
-        meta:"Classe : Keter — Procédure : Chambre blindée multi-couches, manipulation robotisée uniquement"
-      },
-      {
-        id:"SCP-173", classe:"euclide",
-        img:"",
-        imgDefault:"https://scp-wiki.wdfiles.com/local--files/scp-173/SCP-173.jpg",
-        desc:"SCP-173 est une sculpture en béton armé et barres d'acier d'une hauteur de 1,90 m. L'entité est animée d'une capacité de déplacement à vitesse extrême, avec une contrainte stricte : elle est dans l'incapacité totale de se mouvoir lorsqu'elle est directement observée par un ou plusieurs êtres humains. La rupture du contact visuel, même instantanée — clignement inclus — suffit à permettre à SCP-173 de repositionner et de neutraliser les sujets présents, par torsion cervicale ou strangulation. Lors de toute entrée en chambre, un effectif minimum de trois agents est obligatoire afin de maintenir un contact visuel permanent. La substance rouge-brune accumulée au sol est identifiée comme un mélange de sang et de matières fécales. Son origine demeure indéterminée.",
-        meta:"Classe : Euclide — Procédure : Effectif minimum 3 agents, contact visuel permanent obligatoire"
-      },
-      {
-        id:"SCP-2461-D", classe:"euclide",
-        img:"",
-        imgDefault:"https://scp-wiki.wdfiles.com/local--files/scp-2461/scp2461.jpg",
-        desc:"SCP-2461-D est un spécimen végétal anomal dont la description morphologique complète est classifiée au niveau 3. Les données accessibles indiquent que l'objet exerce une influence cognitive progressive sur tout observateur s'y exposant pendant plus de 90 secondes consécutives. Les sujets exposés rapportent des perceptions auditives récurrentes et une altération du sens de l'orientation spatiale dans les 48 heures suivant l'exposition. Aucun vecteur physique n'a été identifié. Les expériences conduites au Site-72 sont en cours d'analyse. La consultation du dossier complet requiert une autorisation de la direction scientifique.",
-        meta:"Classe : Euclide — Procédure : Chambre isolée, observation via caméra uniquement, aucune présence directe"
-      },
-      {
-        id:"SCP-131-A/B", classe:"sur",
-        img:"",
-        imgDefault:"https://scp-wiki.wdfiles.com/local--files/scp-131/SCP131.jpg",
-        desc:"SCP-131-A et SCP-131-B sont deux entités mobiles ovoïdes d'environ 30 cm de hauteur, présentant l'apparence d'un œil unique monté sur une base à roulettes. Les deux entités semblent liées par une forme d'attachement mutuel et ne s'éloignent jamais de plus de 5 mètres l'une de l'autre. Elles font preuve d'une curiosité naturelle envers le personnel du site et d'une affection manifeste pour les individus bienveillants à leur égard. Les entités semblent attirées par SCP-173 dont elles assurent une surveillance spontanée et continue, les rendant utiles comme sentinelles lors des interventions en chambre. Aucune capacité offensive n'a jamais été observée.",
-        meta:"Classe : Sûr — Procédure : Déplacement libre dans le couloir B autorisé sous supervision"
-      },
-      {
-        id:"SCP-996", classe:"euclide",
-        img:"",
-        imgDefault:"https://scp-wiki.wdfiles.com/local--files/scp-996/scp-996.jpg",
-        desc:"SCP-996 est un dispositif mécanique de fabrication inconnue, dont la composition exacte résiste à l'analyse spectrale standard. L'objet génère un champ d'attraction gravitationnelle localisé sur tout objet métallique de moins de 2 kilogrammes situé dans un rayon de 4 mètres. La force d'attraction augmente de façon non linéaire à mesure que les objets approchent. Trois incidents de compression ont été enregistrés lors des tentatives de désassemblage, causant des blessures légères au personnel. L'intérieur du dispositif n'a pas encore pu être inspecté. Toute expérience impliquant SCP-996 est soumise à validation préalable du superviseur.",
-        meta:"Classe : Euclide — Procédure : Chambre non-métallique, accès sur autorisation uniquement"
-      },
-      {
-        id:"SCP-939", classe:"keter",
-        img:"",
-        imgDefault:"https://scp-wiki.wdfiles.com/local--files/scp-939/SCP939_graphic.png",
-        desc:"SCP-939 désigne plusieurs entités zoomorphes mesurant en moyenne 2,2 mètres, dépourvues de pigmentation cutanée visible, quadrupèdes, dotées d'une gueule présentant plusieurs rangées de dents acérées. Les spécimens sont biologiquement aveugles mais perçoivent leur environnement par détection thermique et vibratoire. Leur caractéristique la plus dangereuse est leur capacité à reproduire fidèlement la voix humaine de leurs victimes passées afin d'attirer de nouvelles proies dans leur rayon d'action. Les individus attirés se montrent invariablement moins méfiants que lors d'une approche directe. Les trois spécimens confinés au Site-72 ont nécessité deux incidents de recontainment d'envergure depuis leur arrivée.",
-        meta:"Classe : Keter — Procédure : Chambre insonorisée, interdiction absolue de communication verbale lors des interventions"
-      },
-      {
-        id:"SCP-035", classe:"euclide",
-        img:"",
-        imgDefault:"https://scp-wiki.wdfiles.com/local--files/scp-035/SCP035.jpg",
-        desc:"SCP-035 se présente sous la forme d'un masque de théâtre en porcelaine blanche de style comédien dell'arte. L'artefact sécrète en continu un liquide corrosif noirâtre qui dégrade progressivement son support — les matériaux du socle sont remplacés tous les 90 jours. À moins de 60 cm d'un être humain, SCP-035 exerce une forte compulsion à être porté. Une fois porté, l'entité prend le contrôle total du corps hôte, provoquant la décomposition accélérée de ce dernier — la survie du sujet est estimée à 10 à 15 jours post-contact. SCP-035 est capable de communication verbale, d'une intelligence élevée et d'une manipulation psychologique sophistiquée. Il a tenté à plusieurs reprises d'obtenir des informations sur les défenses du site.",
-        meta:"Classe : Euclide — Procédure : Chambre anti-corrosion renforcée, interaction verbale via vitre blindée uniquement"
-      },
-      {
-        id:"SCP-682", classe:"keter",
-        img:"",
-        imgDefault:"https://scp-wiki.wdfiles.com/local--files/scp-682/682-camera.jpg",
-        desc:"SCP-682 est un reptile d'origine indéterminée présentant une résistance anomale à toute forme de destruction et une capacité d'adaptation biologique d'une rapidité sans précédent. L'entité a exprimé à plusieurs reprises une haine déclarée envers toutes les formes de vie et a causé des pertes humaines considérables lors de chaque tentative de neutralisation. SCP-682 peut régénérer des membres en quelques heures, modifier sa biologie en réponse aux méthodes d'attaque employées contre lui, et a survécu à l'ensemble des protocoles de neutralisation testés à ce jour — y compris des expositions à des agents chimiques, physiques et anomaux. Le confinement au Site-72 est temporaire, le site principal étant en maintenance structurelle.",
-        meta:"Classe : Keter — Procédure : Cuve d'acide chlorhydrique 35%, surveillance continue, protocole K-82 d'urgence actif"
-      },
-      {
-        id:"SCP-527", classe:"euclide",
-        img:"",
-        imgDefault:"https://scp-wiki.wdfiles.com/local--files/scp-527/scp527.jpg",
-        desc:"SCP-527, désigné informellement « M. Poisson » au sein du personnel du site, est un être humain adulte de sexe masculin présentant une tête de poisson osseux entièrement fonctionnelle à la place d'une tête humaine. Hormis cet attribut, SCP-527 présente une physiologie humaine totalement standard — il respire de l'air, s'alimente normalement et ne nécessite pas d'immersion aquatique. Il est capable de communication verbale claire. SCP-527 présente un profil psychologique coopératif, curieux et socialement adapté. Il a exprimé à plusieurs reprises une détresse vis-à-vis de sa condition et bénéficie d'un suivi psychologique bimensuel. L'origine de son anomalie demeure inexpliquée.",
-        meta:"Classe : Euclide — Procédure : Logement standard aménagé, accès supervisé au couloir B autorisé"
-      },
-      {
-        id:"SCP-096", classe:"euclide",
-        img:"",
-        imgDefault:"https://scp-wiki.wdfiles.com/local--files/scp-096/SCP096.jpg",
-        desc:"SCP-096 est un humanoïde extrêmement longiligne mesurant 2,38 m, d'une maigreur pathologique, à la peau blanche et aux membres supérieurs de longueur anormale. Dans son état de repos, l'entité reste immobile, recroquevillée, la tête enfouie entre les genoux, sans réagir à aucun stimulus. Dès qu'un être humain aperçoit le visage de SCP-096 — même sur une image, un enregistrement vidéo ou un simple reflet — l'entité entre en état d'agitation extrême et poursuit la cible concernée sans relâche, quelle que soit la distance ou les obstacles, jusqu'à neutralisation complète du sujet. Aucune barrière physique n'a résisté à sa progression lors de ces événements. Toute documentation photographique du visage est strictement prohibée.",
-        meta:"Classe : Euclide — Procédure : Chambre opaque, sac de confinement lors des transferts, aucune image du visage autorisée"
-      }
-    ]
-  },
-  securite:{
-    presentation:"Le département sécuritaire assure la protection du Site-72, le confinement d'urgence et la surveillance des zones à risque. Il comprend la Sécurité Interne Secondaire (SIS), la Sécurité Interne Primaire (SIP), les unités CAPT, l'Unité Papillon et les escouades FIM rattachées au site.",
-    items:[
-      {id:"EIR — Équipe d'Intervention Rapide",img:"",imgDefault:"",desc:"L'Équipe d'Intervention Rapide est une unité d'assaut interne déployée pour les situations d'urgence nécessitant une réponse armée immédiate — brèche de confinement, menace active ou exfiltration d'urgence de personnel. L'EIR est maintenue en alerte permanente et peut être déployée en moins de 90 secondes depuis sa position de repos.",meta:"Département : Sécurité · SIS"},
-      {id:"SIS — Sécurité Interne Secondaire",img:"",imgDefault:"",desc:"La Sécurité Interne Secondaire constitue le premier niveau de sécurité du site. Ses agents assurent les rondes de surveillance dans les zones non-critiques, contrôlent les accès aux couloirs communs et veillent à la bonne application des protocoles de sécurité de base. La SIS est le point d'entrée pour la majorité du personnel de sécurité nouvellement affecté au Site-72.",meta:"Département : Sécurité · Personnel de base"},
-      {id:"SIP — Sécurité Interne Primaire",img:"",imgDefault:"",desc:"Les agents de la Sécurité Interne Primaire sont positionnés directement aux abords des chambres de confinement actif. Leur mission est d'assurer la surveillance continue des accès aux zones à risque, de contrôler les entrées et sorties du personnel autorisé et d'intervenir en premier lors d'une alerte de brèche. Une formation spécifique aux protocoles anomaux est obligatoire.",meta:"Département : Sécurité · Zone de confinement"},
-      {id:"APR — Agent de Protection Rapprochée",img:"",imgDefault:"",desc:"L'Agent de Protection Rapprochée assure la sécurité physique directe des membres de la direction et des personnalités de haut rang présentes au Site-72. Il effectue les escortes au sein du site, assure les extractions d'urgence et peut être déployé en dehors du site pour des missions de protection ponctuelles.",meta:"Département : Sécurité · Protection direction"},
-      {id:"CAPT-SIS",img:"",imgDefault:"",desc:"Le Capitaine de la Sécurité Interne Secondaire coordonne les unités de sécurité non-primaires du site. Il supervise les rondes, gère les déploiements du personnel de la SIS et sert de lien opérationnel entre les agents de terrain et la direction sécuritaire. En situation d'alerte, il active les protocoles de verrouillage et coordonne les équipes d'évacuation.",meta:"Département : Sécurité · Commandement SIS"},
-      {id:"CAPT-SIP",img:"",imgDefault:"",desc:"Le Capitaine de la Sécurité Interne Primaire est responsable de la protection directe des zones de confinement actif. Il commande les agents SIP, applique les protocoles d'urgence lors des brèches et coordonne en permanence avec les équipes scientifiques pour anticiper les risques. Ce poste exige une formation avancée aux anomalies de classe Euclide et Keter.",meta:"Département : Sécurité · Commandement SIP"},
-      {id:"Commandement Sécuritaire",img:"",imgDefault:"",desc:"Le Commandement Sécuritaire regroupe les officiers supérieurs responsables de la planification stratégique des opérations de sécurité du site. Il supervise l'ensemble des unités (SIS, SIP, EIR, APR, FIM) et arbitre les décisions lors des incidents majeurs. Le Commandement Sécuritaire rapporte directement au Directeur de la Sécurité.",meta:"Département : Sécurité · Direction opérationnelle"},
-      {id:"Unité « Papillon »",img:"",imgDefault:"",desc:"L'Unité Papillon est une unité spéciale dont les missions et effectifs sont classifiés au niveau 4. Elle opère en dehors des protocoles de sécurité standard et répond exclusivement au Directeur de la Sécurité. Les agents de l'Unité Papillon ne sont pas répertoriés dans les registres du personnel courant du Site-72.",meta:"Département : Sécurité · CLASSIFIÉ",flagged:true},
-      {id:"Directeur de la Sécurité",img:"",imgDefault:"",desc:"Le Directeur de la Sécurité est le plus haut responsable sécuritaire du Site-72. Il supervise l'ensemble des unités et protocoles de défense du site, valide les plans d'intervention d'urgence et coordonne avec la direction de site lors de tout incident critique. Il est l'unique interlocuteur du Commandement Fondation pour les questions sécuritaires du site.",meta:"Département : Sécurité · Direction"},
-      {id:"FIM — Epsilon-11 « Renard à Neuf Queues »",img:"",imgDefault:"",desc:"L'escouade Epsilon-11 est une Force d'Intervention Mobile spécialisée dans la reprise de contrôle des installations de la Fondation tombées sous des menaces internes ou externes. Elle intervient principalement lors de brèches multi-anomalies ou de tentatives d'infiltration coordonnée.",meta:"Département : FIM"},
-      {id:"FIM — Beta-7 « Chapeliers Maz »",img:"",imgDefault:"",desc:"L'escouade Beta-7 est spécialisée dans la neutralisation et le recontainment d'anomalies de nature méméthique, cognitohazardous ou chimique. Ses membres reçoivent une formation intensive aux protocoles de résistance cognitive et coordonnent avec le département scientifique lors de toute exposition à un agent méméthique.",meta:"Département : FIM"},
-      {id:"FIM — Nu-7 « Coup de Marteau »",img:"",imgDefault:"",desc:"L'escouade Nu-7 est une unité d'intervention lourde déployée pour les menaces nécessitant une puissance de feu ou une capacité de confinement physique supérieure aux ressources standard. Elle dispose de véhicules blindés, d'armement lourd et de systèmes de confinement mobile.",meta:"Département : FIM"},
-      {id:"FIM — Alpha-1 « Bras droit »",img:"",imgDefault:"",flagged:true,desc:"[DOSSIER CONFIDENTIEL] — Les informations relatives à l'escouade Alpha-1 sont classifiées au niveau 4. Ce dossier est accessible en consultation limitée mais les détails opérationnels, effectifs et missions restent occultés. Toute demande de déclassification doit être adressée directement à la direction de site.",meta:"Département : FIM · DOSSIER SIGNALÉ"}
-    ]
-  },
-  scientifique:{
-    presentation:"Le département scientifique conduit l'étude contrôlée des objets sous confinement. Il est structuré en trois niveaux progressifs : personnel local, encadrement scientifique et direction scientifique. Tout protocole d'expérience doit être validé avant exécution.",
-    items:[
-      {id:"Assistant Novice",img:"",imgDefault:"",desc:"L'Assistant Novice est le premier échelon du personnel scientifique du Site-72. Fraîchement intégré, il seconde les chercheurs expérimentés dans leurs travaux, gère la préparation du matériel d'expérience et rédige les comptes-rendus préliminaires. Son accès aux zones de confinement est limité et toujours supervisé par un scientifique senior.",meta:"Département : Science · Personnel local"},
-      {id:"Scientifique",img:"",imgDefault:"",desc:"Le Scientifique est un chercheur opérationnel affecté à l'étude des propriétés anomales des objets confinés. Il conduit des expériences sous supervision, rédige des rapports d'analyse et contribue aux hypothèses de recherche de son équipe. L'accès direct aux objets de classe Euclide ou supérieure requiert l'accord d'un superviseur.",meta:"Département : Science · Personnel local"},
-      {id:"Scientifique Avancé",img:"",imgDefault:"",desc:"Le Scientifique Avancé dispose d'une expérience significative dans l'étude des anomalies et peut concevoir et conduire des protocoles d'expérience de manière semi-autonome. Il encadre ponctuellement les assistants et scientifiques juniors et sert de référent technique lors des analyses complexes.",meta:"Département : Science · Personnel local"},
-      {id:"Superviseur",img:"",imgDefault:"",desc:"Le Superviseur encadre les équipes de recherche et veille à l'application rigoureuse des protocoles de sécurité lors des expériences. Il valide les protocoles de niveau courant, coordonne les plannings de recherche et transmet à la direction toute expérience présentant un risque élevé. Il est l'interlocuteur direct entre les chercheurs et la direction scientifique.",meta:"Département : Science · Encadrement"},
-      {id:"Professeur",img:"",imgDefault:"",desc:"Le Professeur assure la transmission des protocoles et des savoirs aux nouveaux membres du personnel scientifique. Il dispense les formations obligatoires sur les procédures de sécurité anomales, participe à la rédaction des guides de confinement et peut conduire ses propres travaux de recherche en parallèle de ses missions pédagogiques.",meta:"Département : Science · Encadrement"},
-      {id:"Direction Scientifique",img:"",imgDefault:"",desc:"La Direction Scientifique désigne l'échelon de commandement intermédiaire entre la supervision de recherche et le Directeur Scientifique. Elle arbitre les priorités de recherche, valide les expériences à risque modéré à élevé et assure la continuité scientifique du site en cas d'absence du Directeur.",meta:"Département : Science · Direction"},
-      {id:"Directeur Scientifique",img:"",imgDefault:"",desc:"Le Directeur Scientifique est le plus haut responsable de la recherche au Site-72. Il valide l'ensemble des protocoles d'expérience, supervise les relations entre les équipes de recherche et la direction de site, et arbitre les priorités d'étude selon les directives du commandement Fondation. En situation d'incident, il est consulté en priorité pour toute décision impliquant un objet anomal actif.",meta:"Département : Science · Direction"}
-    ]
-  },
-  medical:{
-    presentation:"Le département médical assure le suivi de santé physique et psychologique de l'ensemble du personnel du Site-72. Il gère les expositions anomales, les blessures de service et fournit un soutien continu aux équipes opérant en conditions à risque.",
-    items:[
-      {id:"Personnel du Quartier Médical",img:"",imgDefault:"",desc:"Le personnel du quartier médical constitue l'effectif de base du département. Ils assurent le fonctionnement quotidien des installations médicales, la gestion des stocks de matériel et de médicaments, le suivi administratif des dossiers patients et l'accueil du personnel venant consulter.",meta:"Département : Médical · Base"},
-      {id:"Infirmier",img:"",imgDefault:"",desc:"Les infirmiers assurent les soins courants du personnel, la gestion des urgences mineures et le soutien aux équipes lors des opérations à risque. Ils sont présents lors de toute expérience impliquant un sujet Classe-D et peuvent être déployés dans les zones de confinement sous escorte sécuritaire.",meta:"Département : Médical"},
-      {id:"Médecin",img:"",imgDefault:"",desc:"Le Médecin prend en charge les consultations médicales, le diagnostic des affections courantes et des syndromes d'exposition anomale. Il prescrit les traitements adaptés, assure le suivi post-incident des agents exposés et rédige les rapports médicaux transmis à la direction.",meta:"Département : Médical"},
-      {id:"Médecin de Terrain",img:"",imgDefault:"",desc:"Le Médecin de Terrain est formé pour intervenir directement dans les zones à risque lors d'incidents actifs. Il assure les premiers secours aux agents blessés en zone de confinement ou lors d'opérations FIM, dans des conditions souvent dégradées et sous contrainte de temps. Sa polyvalence médicale et sa résistance au stress sont des critères de sélection primordiaux.",meta:"Département : Médical · Terrain"},
-      {id:"Médecin-Chef",img:"",imgDefault:"",desc:"Le Médecin-Chef supervise l'ensemble du département médical du Site-72. Il valide les protocoles de soins, coordonne la réponse médicale lors des incidents et établit les rapports d'état de santé destinés à la direction. Il est habilité à décider de la mise en quarantaine médicale d'un agent exposé et à déterminer l'aptitude opérationnelle du personnel.",meta:"Département : Médical · Commandement"},
-      {id:"Direction Médicale Locale",img:"",imgDefault:"",desc:"La Direction Médicale Locale assure l'administration et la planification stratégique du département médical. Elle gère les ressources humaines médicales, supervise les protocoles de soins spéciaux liés aux expositions anomales et coordonne avec la direction de site pour les décisions médicales impactant les opérations.",meta:"Département : Médical · Direction"},
-      {id:"Directeur Médical",img:"",imgDefault:"",desc:"Le Directeur Médical est le plus haut responsable médical du Site-72. Il valide les protocoles de soins critiques, représente le département médical auprès de la direction de site et du commandement Fondation, et décide en dernier ressort des mesures médicales d'urgence affectant le fonctionnement du site.",meta:"Département : Médical · Direction"}
-    ]
-  },
-  horsfondation:{
-    presentation:"Recensement des entités et groupes extérieurs à la Fondation SCP dont la présence ou l'activité a été documentée en lien avec le Site-72. Ces dossiers sont classifiés et ne sont accessibles qu'au personnel habilité.",
-    items:[
-      {id:"Classe-D",img:"",imgDefault:"",desc:"Les sujets Classe-D sont des individus recrutés — généralement parmi la population carcérale — pour servir de cobayes lors des expériences sur les objets anomaux. Ils ne disposent d'aucune habilitation, d'aucun droit d'accès aux zones sécurisées et sont sous la surveillance permanente du Chef Carcérale et de la Sécurité Interne. Leur statut au sein du Site-72 est strictement utilitaire. Les conditions de leur recrutement et de leur gestion sont régies par des protocoles Fondation classifiés.",meta:"Statut : Sujet · Hors personnel"},
-      {id:"Insurrection du Chaos",img:"",imgDefault:"",desc:"L'Insurrection du Chaos est une organisation hostile considérée comme l'une des principales menaces externes pesant sur les installations de la Fondation SCP. Ses agents cherchent à s'emparer d'objets anomaux à des fins offensives et ont conduit plusieurs opérations d'infiltration documentées contre des sites Fondation. Tout contact non autorisé avec un individu suspecté d'appartenir à l'Insurrection du Chaos doit être immédiatement signalé au Directeur de la Sécurité.",meta:"Statut : Organisation hostile · Menace niveau élevé"},
-      {id:"Main du Serpent",img:"",imgDefault:"",desc:"La Main du Serpent est un groupe d'intérêt anomal dont l'idéologie s'oppose aux pratiques de confinement de la Fondation. Ses membres considèrent que les entités anomales ne doivent pas être isolées mais intégrées à la société humaine. La Main du Serpent n'est pas systématiquement hostile mais constitue une menace informationnelle et opérationnelle à surveiller. Des interactions diplomatiques limitées ont eu lieu dans le passé.",meta:"Statut : Groupe d'intérêt · Menace modérée"}
-    ]
-  }
+const SECTIONS = {
+  scp:{label:"Tous les SCP", isSCP:true, presentation:"Index des objets anomaux confinés au Site-72. Cliquez sur un objet pour accéder à sa fiche. Les dossiers Keter requièrent une habilitation de niveau 3 minimum."},
+  securite:{label:"Département Sécuritaire", isSCP:false, presentation:"Le département sécuritaire assure la protection du Site-72, le confinement d'urgence et la surveillance des zones à risque. Il comprend la SIS, la SIP, les unités CAPT, l'Unité Papillon et les escouades FIM."},
+  scientifique:{label:"Département Scientifique", isSCP:false, presentation:"Le département scientifique conduit l'étude contrôlée des objets sous confinement. Structuré en personnel local, encadrement et direction scientifique."},
+  medical:{label:"Département Médical", isSCP:false, presentation:"Le département médical assure le suivi de santé physique et psychologique de l'ensemble du personnel du Site-72."},
+  horsfondation:{label:"Hors Fondation", isSCP:false, presentation:"Entités et groupes extérieurs à la Fondation SCP dont la présence ou l'activité a été documentée en lien avec le Site-72."}
 };
 
 /* ============================================================
@@ -430,14 +353,21 @@ function login(){
   openDash();
 }
 function loginGuest(){CU={name:"Invité",role:"Invité",canEdit:false};openDash();}
+window.login=login; window.loginGuest=loginGuest;
+
 function openDash(){
   document.getElementById("loginError").textContent="";
   document.getElementById("whoName").textContent=CU.name;
   document.getElementById("whoRole").textContent="— "+CU.role;
   document.getElementById("loginScreen").style.display="none";
   document.getElementById("dashboard").style.display="block";
+  document.getElementById("newsSection").style.display="block";
+  listenNews();
 }
+
 function logout(){
+  if(unsubItems){unsubItems();unsubItems=null;}
+  if(unsubNews){unsubNews();unsubNews=null;}
   CU=null;
   document.getElementById("uname").value="";
   document.getElementById("upass").value="";
@@ -445,252 +375,331 @@ function logout(){
   document.getElementById("loginScreen").style.display="flex";
   goHome();
 }
+window.logout=logout;
+
+document.getElementById("upass").addEventListener("keydown",function(e){if(e.key==="Enter")login();});
 
 /* ============================================================
    NAV
 ============================================================ */
 function goHome(){
+  if(unsubItems){unsubItems();unsubItems=null;}
+  curSec=null;
   document.getElementById("cardsHome").style.display="grid";
   document.getElementById("secView").style.display="none";
-  curSec=null;
+  document.getElementById("addItemBtn").style.display="none";
 }
+window.goHome=goHome;
+
 function openSection(key){
   curSec=key;
   document.getElementById("cardsHome").style.display="none";
   document.getElementById("secView").style.display="block";
-  renderSection(key);
+  document.getElementById("presBox").textContent=SECTIONS[key].presentation;
+  document.getElementById("igrid").innerHTML="<div class='loading'><span class='sync-dot'></span>Chargement...</div>";
+  if(CU&&CU.canEdit){document.getElementById("addItemBtn").style.display="inline-flex";}
+  else{document.getElementById("addItemBtn").style.display="none";}
+  if(unsubItems){unsubItems();unsubItems=null;}
+  waitFB(function(){
+    const db=window._db;
+    const q=window._query(window._col(db,key),window._orderBy("order","asc"));
+    unsubItems=window._onSnapshot(q,function(snap){
+      renderItems(key, snap.docs.map(function(d){return Object.assign({_id:d.id},d.data());}));
+    });
+  });
 }
-function renderSection(key){
-  const dept=DATA[key];
-  document.getElementById("presBox").textContent=dept.presentation;
+window.openSection=openSection;
+
+function waitFB(cb){
+  if(window._fbReady){cb();}
+  else{window.addEventListener("fbReady",function h(){window.removeEventListener("fbReady",h);cb();});}
+}
+
+/* ============================================================
+   RENDER ITEMS
+============================================================ */
+function renderItems(key, items){
   const grid=document.getElementById("igrid");
+  if(!items.length){
+    grid.innerHTML="<p style='font-family:Space Mono,monospace;font-size:12px;color:var(--dim);grid-column:1/-1;'>Aucun élément pour l'instant.</p>";
+    return;
+  }
   grid.innerHTML="";
-  dept.items.forEach(function(item,i){
+  const isSCP=SECTIONS[key].isSCP;
+  items.forEach(function(item){
     const card=document.createElement("div");
     card.className="icard";
-    card.onclick=function(){openModal(key,i);};
-    const src=item.img||item.imgDefault||"";
+    card.onclick=function(){openModal(key,item);};
+    let imgHtml=item.img
+      ?"<img src='"+item.img+"' alt='"+item.id+"' onerror=\"this.style.display='none'\">"
+      :"<div class='noimg'><span>— SITE-72 —</span></div>";
     let badge="";
-    if(dept.isSCP){
+    if(isSCP){
       const cl=item.classe||"sur";
       const lb={sur:"Sûr",euclide:"Euclide",keter:"Keter",thaumiel:"Thaumiel"};
       badge="<div class='badge "+cl+"'>"+(lb[cl]||cl)+"</div>";
     }
-    card.innerHTML="<img src='"+src+"' alt='"+item.id+"' onerror=\"this.style.display='none'\"><div class='ii'><div class='iname'>"+item.id+"</div>"+badge+"</div>";
+    card.innerHTML=imgHtml+"<div class='ii'><div class='iname'>"+escH(item.name||item.id||"")+"</div>"+badge+"</div>";
     grid.appendChild(card);
   });
 }
 
 /* ============================================================
-   MODAL
+   MODAL VIEW
 ============================================================ */
-function openModal(key,i){
-  modalKey=key;modalIdx=i;
-  const dept=DATA[key];
-  const item=dept.items[i];
+function openModal(key,item){
+  editingId=item._id;
+  const isSCP=SECTIONS[key].isSCP;
   const canEdit=CU&&CU.canEdit;
-  const isSCP=dept.isSCP;
-  const src=item.img||item.imgDefault||"";
   let h="";
-  if(item.flagged) h+="<div class='flagged-note'>▲ DOSSIER SIGNALÉ — Consultation restreinte. Détails opérationnels occultés.</div>";
-  if(src) h+="<img class='mimg"+(isSCP?"":" person")+"' src='"+src+"' alt='"+item.id+"' id='mimg-live' onerror=\"this.style.display='none'\">";
-  h+="<h3>"+item.id+"</h3>";
-  h+="<div class='mdesc' id='mdesc-live'>"+item.desc+"</div>";
-  h+="<div class='mmeta'>"+item.meta+"</div>";
+  if(item.flagged) h+="<div class='flagged-note'>▲ DOSSIER SIGNALÉ — Consultation restreinte.</div>";
+  if(item.img) h+="<img class='mimg"+(isSCP?"":" person")+"' src='"+item.img+"' onerror=\"this.style.display='none'\">";
+  h+="<h3>"+escH(item.name||item.id||"")+"</h3>";
+  if(item.role) h+="<div class='mrole'>"+escH(item.role)+"</div>";
+  h+="<div class='mdesc'>"+escH(item.desc||"Aucune description disponible.")+"</div>";
+  if(item.meta) h+="<div class='mmeta'>"+escH(item.meta)+"</div>";
   if(canEdit){
-    h+="<div class='esec'><h4>Modifier ce dossier</h4>";
-    h+="<label>Nom / Intitulé</label><input type='text' id='e-name' value=\""+item.id.replace(/"/g,'&quot;')+"\">";
-    h+="<label>Description</label><textarea id='e-desc'>"+item.desc+"</textarea>";
-    h+="<label>Image — uploader un fichier</label>";
-    h+="<input type='file' id='e-file' accept='image/*' onchange='previewImg(this)'>";
-    h+="<img id='img-preview' class='img-preview'>";
-    h+="<div class='eactions'>";
-    h+="<button class='btn sm' onclick='saveModal()'>Enregistrer</button>";
-    h+="<button class='btn sm ghost' onclick='closeModal()'>Annuler</button>";
-    if(item.img) h+="<button class='btn sm ghost' onclick='removeImg()'>Supprimer l\\'image</button>";
-    h+="</div></div>";
+    h+="<div class='eactions' style='margin-top:16px;'>";
+    h+="<button class='btn sm' onclick=\"closeModal();openItemEditor('"+item._id+"')\">Modifier</button>";
+    h+="<button class='btn sm danger' onclick=\"confirmDelete('"+key+"','"+item._id+"')\">Supprimer</button>";
+    h+="</div>";
   }
   document.getElementById("minner").innerHTML=h;
   document.getElementById("moverlay").style.display="flex";
   document.body.style.overflow="hidden";
 }
+window.openModal=openModal;
 
-function previewImg(input){
+function confirmDelete(key,id){
+  if(!confirm("Supprimer cet élément définitivement ?")) return;
+  waitFB(function(){
+    window._deleteDoc(window._doc(window._db,key,id)).then(function(){closeModal();});
+  });
+}
+window.confirmDelete=confirmDelete;
+
+function closeModal(){document.getElementById("moverlay").style.display="none";document.body.style.overflow="";}
+function overlayClick(e){if(e.target===document.getElementById("moverlay"))closeModal();}
+window.closeModal=closeModal; window.overlayClick=overlayClick;
+
+/* ============================================================
+   ITEM EDITOR
+============================================================ */
+function openItemEditor(id){
+  const isSCP=SECTIONS[curSec]&&SECTIONS[curSec].isSCP;
+  document.getElementById("e-classe-wrap").style.display=isSCP?"block":"none";
+  document.getElementById("e-preview").style.display="none";
+  document.getElementById("e-file").value="";
+  if(id===null||id===-1){
+    editingId=null;
+    document.getElementById("editorTitle").textContent="Nouvel élément";
+    document.getElementById("e-name").value="";
+    document.getElementById("e-classe").value="sur";
+    document.getElementById("e-desc").value="";
+    document.getElementById("e-meta").value="";
+    document.getElementById("e-delete").style.display="none";
+  } else {
+    editingId=id;
+    document.getElementById("editorTitle").textContent="Modifier l'élément";
+    document.getElementById("e-delete").style.display="inline-flex";
+    waitFB(function(){
+      window._getDocs(window._col(window._db,curSec)).then(function(snap){
+        const d=snap.docs.find(function(x){return x.id===id;});
+        if(!d) return;
+        const item=d.data();
+        document.getElementById("e-name").value=item.name||item.id||"";
+        document.getElementById("e-classe").value=item.classe||"sur";
+        document.getElementById("e-desc").value=item.desc||"";
+        document.getElementById("e-meta").value=item.meta||"";
+        if(item.img){document.getElementById("e-preview").src=item.img;document.getElementById("e-preview").style.display="block";}
+      });
+    });
+  }
+  document.getElementById("editorOverlay").style.display="flex";
+  document.body.style.overflow="hidden";
+}
+window.openItemEditor=openItemEditor;
+
+function previewEditorImg(input){
   if(!input.files||!input.files[0]) return;
-  const reader=new FileReader();
-  reader.onload=function(e){
-    const prev=document.getElementById("img-preview");
-    prev.src=e.target.result;
-    prev.style.display="block";
-  };
+  var reader=new FileReader();
+  reader.onload=function(e){var p=document.getElementById("e-preview");p.src=e.target.result;p.style.display="block";};
   reader.readAsDataURL(input.files[0]);
 }
+window.previewEditorImg=previewEditorImg;
 
-function saveModal(){
-  const item=DATA[modalKey].items[modalIdx];
-  item.id=document.getElementById("e-name").value;
-  item.desc=document.getElementById("e-desc").value;
-  const fileInput=document.getElementById("e-file");
-  if(fileInput&&fileInput.files&&fileInput.files[0]){
-    const reader=new FileReader();
-    reader.onload=function(e){
-      item.img=e.target.result;
-      closeModal();
-      openSection(modalKey);
+function saveItem(){
+  const name=document.getElementById("e-name").value.trim();
+  if(!name){alert("Le nom est obligatoire.");return;}
+  const isSCP=SECTIONS[curSec]&&SECTIONS[curSec].isSCP;
+  function doSave(imgData){
+    const obj={
+      name:name,
+      id:name,
+      classe:isSCP?document.getElementById("e-classe").value:"",
+      desc:document.getElementById("e-desc").value.trim(),
+      meta:document.getElementById("e-meta").value.trim(),
+      order:Date.now()
     };
-    reader.readAsDataURL(fileInput.files[0]);
-  } else {
-    closeModal();
-    openSection(modalKey);
+    if(imgData) obj.img=imgData;
+    waitFB(function(){
+      if(editingId){
+        window._getDocs(window._col(window._db,curSec)).then(function(snap){
+          const d=snap.docs.find(function(x){return x.id===editingId;});
+          const existing=d?d.data():{};
+          if(!imgData&&existing.img) obj.img=existing.img;
+          window._setDoc(window._doc(window._db,curSec,editingId),obj).then(function(){closeEditor();});
+        });
+      } else {
+        window._addDoc(window._col(window._db,curSec),obj).then(function(){closeEditor();});
+      }
+    });
   }
+  const f=document.getElementById("e-file");
+  if(f&&f.files&&f.files[0]){
+    var r=new FileReader();
+    r.onload=function(e){doSave(e.target.result);};
+    r.readAsDataURL(f.files[0]);
+  } else {doSave(null);}
 }
+window.saveItem=saveItem;
 
-function removeImg(){
-  DATA[modalKey].items[modalIdx].img="";
-  closeModal();
-  openSection(modalKey);
+function deleteItem(){
+  if(!editingId||!curSec) return;
+  if(!confirm("Supprimer définitivement ?")) return;
+  waitFB(function(){window._deleteDoc(window._doc(window._db,curSec,editingId)).then(function(){closeEditor();});});
 }
+window.deleteItem=deleteItem;
 
-function closeModal(){
-  document.getElementById("moverlay").style.display="none";
-  document.body.style.overflow="";
-}
-function overlayClick(e){if(e.target===document.getElementById("moverlay"))closeModal();}
-document.addEventListener("keydown",function(e){if(e.key==="Escape"){closeModal();closeNewsEditor();closeNewsView();}});
+function closeEditor(){document.getElementById("editorOverlay").style.display="none";document.body.style.overflow="";}
+function editorOverlayClick(e){if(e.target===document.getElementById("editorOverlay"))closeEditor();}
+window.closeEditor=closeEditor; window.editorOverlayClick=editorOverlayClick;
 
 /* ============================================================
    NEWS
 ============================================================ */
-var NEWS = [];
-var editingNewsIdx = -1;
-
-function renderNews(){
-  var grid = document.getElementById("newsGrid");
-  grid.innerHTML = "";
-  if(NEWS.length === 0){
-    grid.innerHTML = "<p style='font-family:Space Mono,monospace;font-size:12px;color:var(--dim);grid-column:1/-1;'>Aucune actualité publiée pour le moment.</p>";
-  } else {
-    NEWS.slice().reverse().forEach(function(n, ri){
-      var i = NEWS.length - 1 - ri;
-      var card = document.createElement("div");
-      card.className = "news-card";
-      card.onclick = function(){ openNewsView(i); };
-      var imgHtml = n.img ? "<img src='"+n.img+"' alt='news'>" : "<div style='height:140px;background:#07111d;display:flex;align-items:center;justify-content:center;'><span style='font-family:Space Mono,monospace;font-size:11px;color:var(--dim);'>— SITE-72 —</span></div>";
-      card.innerHTML = imgHtml + "<div class='nc'><div class='ndate'>"+n.date+"</div><div class='ntitle'>"+n.title+"</div><div class='nexc'>"+(n.body.length>90?n.body.substring(0,90)+"…":n.body)+"</div></div>";
-      grid.appendChild(card);
+function listenNews(){
+  waitFB(function(){
+    const db=window._db;
+    const q=window._query(window._col(db,"news"),window._orderBy("ts","desc"));
+    unsubNews=window._onSnapshot(q,function(snap){
+      renderNews(snap.docs.map(function(d){return Object.assign({_id:d.id},d.data());}));
     });
-  }
-  var addBtn = document.getElementById("newsAddBtn");
-  if(CU && CU.canEdit){ addBtn.style.display="inline-flex"; } else { addBtn.style.display="none"; }
+  });
 }
 
-function openNewsEditor(idx){
-  editingNewsIdx = idx;
-  if(idx >= 0){
-    document.getElementById("newsEditorTitle").textContent = "Modifier l'actualité";
-    document.getElementById("ne-title").value = NEWS[idx].title;
-    document.getElementById("ne-date").value = NEWS[idx].date;
-    document.getElementById("ne-body").value = NEWS[idx].body;
-    var prev = document.getElementById("ne-preview");
-    if(NEWS[idx].img){ prev.src=NEWS[idx].img; prev.style.display="block"; } else { prev.style.display="none"; }
-    document.getElementById("ne-delete").style.display = "inline-flex";
-  } else {
-    document.getElementById("newsEditorTitle").textContent = "Nouvelle actualité";
-    document.getElementById("ne-title").value = "";
-    var today = new Date();
-    document.getElementById("ne-date").value = today.toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"});
-    document.getElementById("ne-body").value = "";
-    document.getElementById("ne-preview").style.display = "none";
-    document.getElementById("ne-delete").style.display = "none";
+function renderNews(items){
+  const grid=document.getElementById("newsGrid");
+  if(CU&&CU.canEdit){document.getElementById("newsAddBtn").style.display="inline-flex";}
+  else{document.getElementById("newsAddBtn").style.display="none";}
+  if(!items.length){
+    grid.innerHTML="<p style='font-family:Space Mono,monospace;font-size:12px;color:var(--dim);grid-column:1/-1;'>Aucune actualité publiée.</p>";
+    return;
   }
-  document.getElementById("ne-file").value = "";
-  document.getElementById("newsEditorOverlay").style.display = "flex";
-  document.body.style.overflow = "hidden";
+  grid.innerHTML="";
+  items.forEach(function(n){
+    const card=document.createElement("div");
+    card.className="news-card";
+    card.onclick=function(){openNewsView(n);};
+    const imgHtml=n.img?"<img src='"+n.img+"' alt='news'>":"";
+    const exc=n.body&&n.body.length>80?n.body.substring(0,80)+"…":(n.body||"");
+    card.innerHTML=imgHtml+"<div class='nc'><div class='ndate'>"+escH(n.date||"")+"</div><div class='ntitle'>"+escH(n.title||"")+"</div><div class='nexc'>"+escH(exc)+"</div></div>";
+    grid.appendChild(card);
+  });
 }
+
+function openNewsEditor(news){
+  editingNewsId=news?news._id:null;
+  document.getElementById("ne-file").value="";
+  document.getElementById("ne-preview").style.display="none";
+  if(news){
+    document.getElementById("newsEditorTitle").textContent="Modifier l'actualité";
+    document.getElementById("ne-title").value=news.title||"";
+    document.getElementById("ne-date").value=news.date||"";
+    document.getElementById("ne-body").value=news.body||"";
+    if(news.img){document.getElementById("ne-preview").src=news.img;document.getElementById("ne-preview").style.display="block";}
+    document.getElementById("ne-delete").style.display="inline-flex";
+  } else {
+    document.getElementById("newsEditorTitle").textContent="Nouvelle actualité";
+    document.getElementById("ne-title").value="";
+    document.getElementById("ne-date").value=new Date().toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"});
+    document.getElementById("ne-body").value="";
+    document.getElementById("ne-delete").style.display="none";
+  }
+  document.getElementById("newsEditorOverlay").style.display="flex";
+  document.body.style.overflow="hidden";
+}
+window.openNewsEditor=openNewsEditor;
 
 function previewNewsImg(input){
   if(!input.files||!input.files[0]) return;
-  var reader = new FileReader();
-  reader.onload = function(e){
-    var prev = document.getElementById("ne-preview");
-    prev.src = e.target.result;
-    prev.style.display = "block";
-  };
-  reader.readAsDataURL(input.files[0]);
+  var r=new FileReader();
+  r.onload=function(e){var p=document.getElementById("ne-preview");p.src=e.target.result;p.style.display="block";};
+  r.readAsDataURL(input.files[0]);
 }
+window.previewNewsImg=previewNewsImg;
 
 function saveNews(){
-  var title = document.getElementById("ne-title").value.trim();
-  var date = document.getElementById("ne-date").value.trim();
-  var body = document.getElementById("ne-body").value.trim();
-  if(!title || !body){ alert("Le titre et le contenu sont obligatoires."); return; }
-  var fileInput = document.getElementById("ne-file");
+  const title=document.getElementById("ne-title").value.trim();
+  const body=document.getElementById("ne-body").value.trim();
+  if(!title||!body){alert("Titre et contenu obligatoires.");return;}
   function doSave(imgData){
-    var obj = {title:title, date:date, body:body, img: imgData||""};
-    if(editingNewsIdx >= 0){
-      if(!imgData && NEWS[editingNewsIdx].img) obj.img = NEWS[editingNewsIdx].img;
-      NEWS[editingNewsIdx] = obj;
-    } else {
-      NEWS.push(obj);
-    }
-    closeNewsEditor();
-    renderNews();
+    const obj={title:title,date:document.getElementById("ne-date").value,body:body,ts:Date.now()};
+    if(imgData) obj.img=imgData;
+    waitFB(function(){
+      if(editingNewsId){
+        window._getDocs(window._col(window._db,"news")).then(function(snap){
+          const d=snap.docs.find(function(x){return x.id===editingNewsId;});
+          const existing=d?d.data():{};
+          if(!imgData&&existing.img) obj.img=existing.img;
+          window._setDoc(window._doc(window._db,"news",editingNewsId),obj).then(function(){closeNewsEditor();});
+        });
+      } else {
+        window._addDoc(window._col(window._db,"news"),obj).then(function(){closeNewsEditor();});
+      }
+    });
   }
-  if(fileInput && fileInput.files && fileInput.files[0]){
-    var reader = new FileReader();
-    reader.onload = function(e){ doSave(e.target.result); };
-    reader.readAsDataURL(fileInput.files[0]);
-  } else {
-    doSave(null);
-  }
+  const f=document.getElementById("ne-file");
+  if(f&&f.files&&f.files[0]){var r=new FileReader();r.onload=function(e){doSave(e.target.result);};r.readAsDataURL(f.files[0]);}
+  else{doSave(null);}
 }
+window.saveNews=saveNews;
 
 function deleteNews(){
-  if(editingNewsIdx >= 0){ NEWS.splice(editingNewsIdx, 1); }
-  closeNewsEditor();
-  renderNews();
+  if(!editingNewsId) return;
+  if(!confirm("Supprimer cette actualité ?")) return;
+  waitFB(function(){window._deleteDoc(window._doc(window._db,"news",editingNewsId)).then(function(){closeNewsEditor();});});
 }
+window.deleteNews=deleteNews;
 
-function closeNewsEditor(){
-  document.getElementById("newsEditorOverlay").style.display = "none";
-  document.body.style.overflow = "";
-}
-function newsOverlayClick(e){ if(e.target===document.getElementById("newsEditorOverlay")) closeNewsEditor(); }
+function closeNewsEditor(){document.getElementById("newsEditorOverlay").style.display="none";document.body.style.overflow="";}
+function newsEditorOverlayClick(e){if(e.target===document.getElementById("newsEditorOverlay"))closeNewsEditor();}
+window.closeNewsEditor=closeNewsEditor; window.newsEditorOverlayClick=newsEditorOverlayClick;
 
-function openNewsView(i){
-  var n = NEWS[i];
-  var canEdit = CU && CU.canEdit;
-  var h = "";
-  if(n.img) h += "<img class='nimg-full' src='"+n.img+"' alt='"+n.title+"'>";
-  h += "<div style='font-family:Space Mono,monospace;font-size:10.5px;color:var(--acc);margin-bottom:8px;'>"+n.date+"</div>";
-  h += "<h3 style='margin-bottom:14px;'>"+n.title+"</h3>";
-  h += "<div style='font-size:13.5px;line-height:1.75;color:var(--ink);white-space:pre-wrap;'>"+n.body+"</div>";
-  if(canEdit){
-    h += "<div style='margin-top:18px;'><button class='btn sm' onclick='closeNewsView();openNewsEditor("+i+")'>Modifier</button></div>";
-  }
-  document.getElementById("newsViewInner").innerHTML = h;
-  document.getElementById("newsViewOverlay").style.display = "flex";
-  document.body.style.overflow = "hidden";
+function openNewsView(n){
+  currentNewsId=n._id;
+  const canEdit=CU&&CU.canEdit;
+  let h="";
+  if(n.img) h+="<img class='nimg-full' src='"+n.img+"'>";
+  h+="<div style='font-family:Space Mono,monospace;font-size:10px;color:var(--acc);margin-bottom:8px;'>"+escH(n.date||"")+"</div>";
+  h+="<h3 style='margin-bottom:12px;'>"+escH(n.title||"")+"</h3>";
+  h+="<div style='font-size:13.5px;line-height:1.75;color:var(--ink);white-space:pre-wrap;'>"+escH(n.body||"")+"</div>";
+  if(canEdit) h+="<div style='margin-top:16px;'><button class='btn sm' onclick=\"closeNewsView();openNewsEditor("+JSON.stringify(n)+")\">Modifier</button></div>";
+  document.getElementById("newsViewInner").innerHTML=h;
+  document.getElementById("newsViewOverlay").style.display="flex";
+  document.body.style.overflow="hidden";
 }
-function closeNewsView(){
-  document.getElementById("newsViewOverlay").style.display = "none";
-  document.body.style.overflow = "";
-}
-function newsViewClick(e){ if(e.target===document.getElementById("newsViewOverlay")) closeNewsView(); }
+window.openNewsView=openNewsView;
 
-/* Afficher news + social au login */
-var _origOpenDash = openDash;
-openDash = function(){
-  _origOpenDash();
-  document.getElementById("newsSection").style.display = "block";
-  document.getElementById("socialBar").style.display = "flex";
-  renderNews();
-};
-var _origGoHome = goHome;
-goHome = function(){
-  _origGoHome();
-  renderNews();
-};
+function closeNewsView(){document.getElementById("newsViewOverlay").style.display="none";document.body.style.overflow="";}
+function newsViewOverlayClick(e){if(e.target===document.getElementById("newsViewOverlay"))closeNewsView();}
+window.closeNewsView=closeNewsView; window.newsViewOverlayClick=newsViewOverlayClick;
+
+/* ============================================================
+   UTILS
+============================================================ */
+function escH(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){closeModal();closeEditor();closeNewsEditor();closeNewsView();}});
 </script>
 </body>
 </html>
