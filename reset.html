@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>SITE-72 — Réinitialisation</title>
+<style>
+body{font-family:monospace;background:#040d17;color:#cfe3ef;padding:30px;max-width:700px;margin:0 auto;}
+h1{color:#5fd4ff;margin-bottom:10px;}
+p{color:#7fa1b8;margin-bottom:20px;line-height:1.6;}
+.warn{color:#ffc98a;background:#3a2510;border:1px solid #a6631c;border-radius:3px;padding:12px;margin-bottom:20px;}
+.log{background:#0a1c2e;border:1px solid #1c3b52;border-radius:4px;padding:16px;min-height:200px;white-space:pre-wrap;font-size:12px;line-height:1.6;margin:20px 0;max-height:400px;overflow-y:auto;}
+.ok{color:#8ff0d3;}.err{color:#ff9d9d;}.info{color:#ffc98a;}
+button{font-family:monospace;background:transparent;border:1px solid #2fa8d1;color:#5fd4ff;padding:12px 24px;border-radius:3px;cursor:pointer;font-size:14px;}
+button:hover{background:rgba(47,168,209,.15);}
+button:disabled{opacity:.4;cursor:not-allowed;}
+</style>
+</head>
+<body>
+<h1>SITE-72 — Réinitialisation complète</h1>
+<div class="warn">⚠ Cette opération supprime TOUTES les données existantes (SCP, rôles, personnel) et les remplace par les données officielles. Les actualités (news) sont conservées.</div>
+<button id="btn">Lancer la réinitialisation</button>
+<div class="log" id="log">En attente...</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, doc, getDocs, addDoc, deleteDoc, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBaoDKrtIJO8dLSnKw0puoLS5QjM1uZx_g",
+  authDomain: "site72-77f10.firebaseapp.com",
+  projectId: "site72-77f10",
+  storageBucket: "site72-77f10.firebasestorage.app",
+  messagingSenderId: "709748220198",
+  appId: "1:709748220198:web:06c3266d0790451f8361e7"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const log = document.getElementById("log");
+const btn = document.getElementById("btn");
+
+function p(msg, cls){ log.innerHTML += "<span class='"+(cls||"")+"'>"+msg+"</span>\n"; log.scrollTop=log.scrollHeight; }
+
+const DATA = {
+  scp:[
+    {name:"SCP-999",classe:"sur",img:"https://scp-wiki.wdfiles.com/local--files/scp-999/SCP999.jpg",desc:"SCP-999 se présente sous la forme d'une masse gélatineuse de couleur orange translucide, d'un poids approximatif de 60 kilogrammes. L'entité se déplace par reptation et manifeste un comportement sociable et affectueux envers tout être humain à sa portée. Tout contact cutané avec SCP-999 provoque une élévation immédiate de l'humeur, accompagnée d'un sentiment de bien-être durable. Aucun effet secondaire néfaste n'a été observé. L'entité est omnivore, avec une préférence marquée pour les confiseries sucrées. SCP-999 semble incapable d'agressivité et n'a jamais causé de blessure.",meta:"Classe : Sûr — Procédure : Chambre standard, accès libre au personnel autorisé"},
+    {name:"SCP-409",classe:"keter",img:"https://scp-wiki.wdfiles.com/local--files/scp-409/409.jpg",desc:"SCP-409 est un cristal de quartz de 45 cm de longueur. Tout contact physique direct déclenche un processus de cristallisation progressive sur le tissu biologique exposé. La minéralisation conduit à une pétrification complète du sujet entre 3 et 6 heures après contact. Les formations cristallines résultantes sont elles-mêmes infectieuses au toucher. Aucun traitement de réversion n'a été identifié. Toute manipulation doit être effectuée exclusivement par bras robotisés.",meta:"Classe : Keter — Procédure : Chambre blindée multi-couches, manipulation robotisée uniquement"},
+    {name:"SCP-173",classe:"euclide",img:"https://scp-wiki.wdfiles.com/local--files/scp-173/SCP-173.jpg",desc:"SCP-173 est une sculpture en béton armé d'une hauteur de 1,90 m. L'entité se déplace à vitesse extrême mais est incapable de le faire lorsqu'elle est directement observée. La rupture du contact visuel, même instantanée, suffit à lui permettre de repositionner et neutraliser les sujets présents par torsion cervicale. Lors de toute entrée en chambre, un effectif minimum de trois agents est obligatoire.",meta:"Classe : Euclide — Procédure : Effectif minimum 3 agents, contact visuel permanent obligatoire"},
+    {name:"SCP-2461-D",classe:"euclide",img:"",desc:"SCP-2461-D est un spécimen végétal anomal dont la description complète est classifiée au niveau 3. L'objet exerce une influence cognitive progressive sur tout observateur s'y exposant pendant plus de 90 secondes. Les sujets exposés rapportent des perceptions auditives récurrentes et une altération du sens de l'orientation spatiale dans les 48 heures suivant l'exposition.",meta:"Classe : Euclide — Procédure : Chambre isolée, observation via caméra uniquement"},
+    {name:"SCP-131-A/B",classe:"sur",img:"https://scp-wiki.wdfiles.com/local--files/scp-131/SCP131.jpg",desc:"SCP-131-A et SCP-131-B sont deux entités mobiles ovoïdes d'environ 30 cm, présentant l'apparence d'un œil unique monté sur une base à roulettes. Les deux entités semblent liées par un attachement mutuel. Elles sont attirées par SCP-173 dont elles assurent une surveillance spontanée et continue, les rendant utiles comme sentinelles lors des interventions en chambre.",meta:"Classe : Sûr — Procédure : Déplacement libre dans le couloir B autorisé sous supervision"},
+    {name:"SCP-996",classe:"euclide",img:"",desc:"SCP-996 est un dispositif mécanique de fabrication inconnue dont la composition résiste à l'analyse spectrale standard. L'objet génère un champ d'attraction gravitationnelle localisé sur tout objet métallique de moins de 2 kilogrammes situé dans un rayon de 4 mètres. Trois incidents de compression ont été enregistrés lors des tentatives de désassemblage.",meta:"Classe : Euclide — Procédure : Chambre non-métallique, accès sur autorisation uniquement"},
+    {name:"SCP-939",classe:"keter",img:"https://scp-wiki.wdfiles.com/local--files/scp-939/SCP939_graphic.png",desc:"SCP-939 désigne plusieurs entités zoomorphes mesurant en moyenne 2,2 mètres, quadrupèdes, dotées d'une gueule présentant plusieurs rangées de dents acérées. Les spécimens sont biologiquement aveugles mais perçoivent leur environnement par détection thermique et vibratoire. Leur caractéristique la plus dangereuse est leur capacité à reproduire fidèlement la voix humaine de leurs victimes pour attirer de nouvelles proies.",meta:"Classe : Keter — Procédure : Chambre insonorisée, interdiction absolue de communication verbale lors des interventions"},
+    {name:"SCP-035",classe:"euclide",img:"https://scp-wiki.wdfiles.com/local--files/scp-035/SCP035.jpg",desc:"SCP-035 se présente sous la forme d'un masque de théâtre en porcelaine blanche. L'artefact sécrète en continu un liquide corrosif noirâtre qui dégrade progressivement son support. À moins de 60 cm d'un être humain, SCP-035 exerce une forte compulsion à être porté. Une fois porté, l'entité prend le contrôle total du corps hôte, provoquant sa décomposition accélérée.",meta:"Classe : Euclide — Procédure : Chambre anti-corrosion, interaction verbale via vitre blindée uniquement"},
+    {name:"SCP-682",classe:"keter",img:"https://scp-wiki.wdfiles.com/local--files/scp-682/682-camera.jpg",desc:"SCP-682 est un reptile d'origine indéterminée présentant une résistance anomale à toute forme de destruction et une capacité d'adaptation biologique d'une rapidité sans précédent. L'entité a exprimé une haine déclarée envers toutes les formes de vie. SCP-682 peut régénérer des membres en quelques heures et a survécu à l'ensemble des protocoles de neutralisation testés à ce jour.",meta:"Classe : Keter — Procédure : Cuve d'acide chlorhydrique 35%, surveillance continue, protocole K-82 actif"},
+    {name:"SCP-527",classe:"euclide",img:"https://scp-wiki.wdfiles.com/local--files/scp-527/scp527.jpg",desc:"SCP-527, désigné informellement « M. Poisson », est un être humain adulte présentant une tête de poisson osseux entièrement fonctionnelle à la place d'une tête humaine. Hormis cet attribut, SCP-527 présente une physiologie humaine totalement standard. Il est capable de communication verbale claire et présente un profil psychologique coopératif et socialement adapté.",meta:"Classe : Euclide — Procédure : Logement standard aménagé, accès supervisé au couloir B autorisé"},
+    {name:"SCP-096",classe:"euclide",img:"https://scp-wiki.wdfiles.com/local--files/scp-096/SCP096.jpg",desc:"SCP-096 est un humanoïde mesurant 2,38 m, d'une maigreur pathologique, à la peau blanche et aux membres supérieurs de longueur anormale. Dès qu'un être humain aperçoit le visage de SCP-096 — même sur une image ou un enregistrement — l'entité entre en état d'agitation extrême et poursuit la cible sans relâche jusqu'à neutralisation complète. Toute documentation photographique du visage est strictement prohibée.",meta:"Classe : Euclide — Procédure : Chambre opaque, sac de confinement lors des transferts"}
+  ],
+  securite:[
+    {name:"EIR — Équipe d'Intervention Rapide",desc:"L'Équipe d'Intervention Rapide est une unité d'assaut interne déployée pour les situations d'urgence nécessitant une réponse armée immédiate — brèche de confinement, menace active ou exfiltration d'urgence de personnel. L'EIR est maintenue en alerte permanente et peut être déployée en moins de 90 secondes.",meta:"Département : Sécurité · SIS"},
+    {name:"SIS — Sécurité Interne Secondaire",desc:"La Sécurité Interne Secondaire constitue le premier niveau de sécurité du site. Ses agents assurent les rondes de surveillance dans les zones non-critiques, contrôlent les accès aux couloirs communs et veillent à la bonne application des protocoles de sécurité de base.",meta:"Département : Sécurité · Personnel de base"},
+    {name:"SIP — Sécurité Interne Primaire",desc:"Les agents de la Sécurité Interne Primaire sont positionnés directement aux abords des chambres de confinement actif. Leur mission est d'assurer la surveillance continue des accès aux zones à risque et d'intervenir en premier lors d'une alerte de brèche.",meta:"Département : Sécurité · Zone de confinement"},
+    {name:"APR — Agent de Protection Rapprochée",desc:"L'Agent de Protection Rapprochée assure la sécurité physique directe des membres de la direction et des personnalités de haut rang présentes au Site-72. Il effectue les escortes au sein du site et assure les extractions d'urgence.",meta:"Département : Sécurité · Protection direction"},
+    {name:"CAPT-SIS",desc:"Le Capitaine de la Sécurité Interne Secondaire coordonne les unités de sécurité non-primaires du site. Il supervise les rondes, gère les déploiements du personnel et active les protocoles de verrouillage en situation d'alerte.",meta:"Département : Sécurité · Commandement SIS"},
+    {name:"CAPT-SIP",desc:"Le Capitaine de la Sécurité Interne Primaire est responsable de la protection directe des zones de confinement actif. Il commande les agents SIP et applique les protocoles d'urgence lors des brèches.",meta:"Département : Sécurité · Commandement SIP"},
+    {name:"Commandement Sécuritaire",desc:"Le Commandement Sécuritaire regroupe les officiers supérieurs responsables de la planification stratégique des opérations de sécurité du site. Il supervise l'ensemble des unités et arbitre les décisions lors des incidents majeurs.",meta:"Département : Sécurité · Direction opérationnelle"},
+    {name:"Unité « Papillon »",desc:"L'Unité Papillon est une unité spéciale dont les missions et effectifs sont classifiés au niveau 4. Elle opère en dehors des protocoles de sécurité standard et répond exclusivement au Directeur de la Sécurité.",meta:"Département : Sécurité · CLASSIFIÉ",flagged:true},
+    {name:"Directeur de la Sécurité",desc:"Le Directeur de la Sécurité est le plus haut responsable sécuritaire du Site-72. Il supervise l'ensemble des unités et protocoles de défense du site et coordonne avec la direction de site lors de tout incident critique.",meta:"Département : Sécurité · Direction"},
+    {name:"FIM — Epsilon-11 « Renard à Neuf Queues »",desc:"L'escouade Epsilon-11 est une Force d'Intervention Mobile spécialisée dans la reprise de contrôle des installations de la Fondation tombées sous des menaces internes ou externes.",meta:"Département : FIM"},
+    {name:"FIM — Beta-7 « Chapeliers Maz »",desc:"L'escouade Beta-7 est spécialisée dans la neutralisation et le recontainment d'anomalies de nature méméthique, cognitohazardous ou chimique.",meta:"Département : FIM"},
+    {name:"FIM — Nu-7 « Coup de Marteau »",desc:"L'escouade Nu-7 est une unité d'intervention lourde déployée pour les menaces nécessitant une puissance de feu ou une capacité de confinement physique supérieure aux ressources standard.",meta:"Département : FIM"},
+    {name:"FIM — Alpha-1 « Bras droit »",desc:"[DOSSIER CONFIDENTIEL] — Les informations relatives à l'escouade Alpha-1 sont classifiées au niveau 4. Les détails opérationnels, effectifs et missions restent occultés.",meta:"Département : FIM · DOSSIER SIGNALÉ",flagged:true}
+  ],
+  scientifique:[
+    {name:"Assistant Novice",desc:"L'Assistant Novice est le premier échelon du personnel scientifique. Il seconde les chercheurs expérimentés, gère la préparation du matériel d'expérience et rédige les comptes-rendus préliminaires. Son accès aux zones de confinement est limité et toujours supervisé.",meta:"Département : Science · Personnel local"},
+    {name:"Scientifique",desc:"Le Scientifique est un chercheur opérationnel affecté à l'étude des propriétés anomales des objets confinés. Il conduit des expériences sous supervision et rédige des rapports d'analyse.",meta:"Département : Science · Personnel local"},
+    {name:"Scientifique Avancé",desc:"Le Scientifique Avancé dispose d'une expérience significative dans l'étude des anomalies et peut concevoir des protocoles d'expérience de manière semi-autonome. Il encadre ponctuellement les assistants et scientifiques juniors.",meta:"Département : Science · Personnel local"},
+    {name:"Superviseur",desc:"Le Superviseur encadre les équipes de recherche et veille à l'application rigoureuse des protocoles de sécurité lors des expériences. Il valide les protocoles de niveau courant et transmet à la direction toute expérience présentant un risque élevé.",meta:"Département : Science · Encadrement"},
+    {name:"Professeur",desc:"Le Professeur assure la transmission des protocoles et des savoirs aux nouveaux membres du personnel scientifique. Il dispense les formations obligatoires sur les procédures de sécurité anomales.",meta:"Département : Science · Encadrement"},
+    {name:"Direction Scientifique",desc:"La Direction Scientifique arbitre les priorités de recherche, valide les expériences à risque modéré à élevé et assure la continuité scientifique du site en cas d'absence du Directeur.",meta:"Département : Science · Direction"},
+    {name:"Directeur Scientifique",desc:"Le Directeur Scientifique est le plus haut responsable de la recherche au Site-72. Il valide l'ensemble des protocoles d'expérience et arbitre les priorités d'étude selon les directives du commandement Fondation.",meta:"Département : Science · Direction"}
+  ],
+  medical:[
+    {name:"Personnel du Quartier Médical",desc:"Le personnel du quartier médical assure le fonctionnement quotidien des installations médicales, la gestion des stocks de matériel et de médicaments et le suivi administratif des dossiers patients.",meta:"Département : Médical · Base"},
+    {name:"Infirmier",desc:"Les infirmiers assurent les soins courants du personnel, la gestion des urgences mineures et le soutien aux équipes lors des opérations à risque. Ils sont présents lors de toute expérience impliquant un sujet Classe-D.",meta:"Département : Médical"},
+    {name:"Médecin",desc:"Le Médecin prend en charge les consultations médicales, le diagnostic des affections courantes et des syndromes d'exposition anomale. Il prescrit les traitements adaptés et assure le suivi post-incident des agents exposés.",meta:"Département : Médical"},
+    {name:"Médecin de Terrain",desc:"Le Médecin de Terrain est formé pour intervenir directement dans les zones à risque lors d'incidents actifs. Il assure les premiers secours aux agents blessés en zone de confinement ou lors d'opérations FIM.",meta:"Département : Médical · Terrain"},
+    {name:"Médecin-Chef",desc:"Le Médecin-Chef supervise l'ensemble du département médical du Site-72. Il valide les protocoles de soins, coordonne la réponse médicale lors des incidents et est habilité à décider de la mise en quarantaine médicale d'un agent exposé.",meta:"Département : Médical · Commandement"},
+    {name:"Direction Médicale Locale",desc:"La Direction Médicale Locale assure l'administration et la planification stratégique du département médical. Elle gère les ressources humaines médicales et supervise les protocoles de soins liés aux expositions anomales.",meta:"Département : Médical · Direction"},
+    {name:"Directeur Médical",desc:"Le Directeur Médical est le plus haut responsable médical du Site-72. Il valide les protocoles de soins critiques et représente le département médical auprès de la direction de site.",meta:"Département : Médical · Direction"}
+  ],
+  horsfondation:[
+    {name:"Classe-D",desc:"Les sujets Classe-D sont des individus recrutés pour servir de cobayes lors des expériences sur les objets anomaux. Ils ne disposent d'aucune habilitation et sont sous la surveillance permanente du personnel sécuritaire. Leur statut au sein du Site-72 est strictement utilitaire.",meta:"Statut : Sujet · Hors personnel"},
+    {name:"Insurrection du Chaos",desc:"L'Insurrection du Chaos est une organisation hostile considérée comme l'une des principales menaces externes pesant sur les installations de la Fondation SCP. Ses agents cherchent à s'emparer d'objets anomaux à des fins offensives. Tout contact non autorisé doit être immédiatement signalé au Directeur de la Sécurité.",meta:"Statut : Organisation hostile · Menace niveau élevé"},
+    {name:"Main du Serpent",desc:"La Main du Serpent est un groupe d'intérêt anomal dont l'idéologie s'oppose aux pratiques de confinement de la Fondation. Ses membres considèrent que les entités anomales ne doivent pas être isolées. La Main du Serpent n'est pas systématiquement hostile mais constitue une menace informationnelle à surveiller.",meta:"Statut : Groupe d'intérêt · Menace modérée"}
+  ]
+};
+
+const SECTIONS = ["scp","securite","scientifique","medical","horsfondation"];
+
+btn.addEventListener("click", async function(){
+  btn.disabled = true;
+  log.innerHTML = "";
+  p("Suppression des anciennes données...\n","info");
+
+  for(const sec of SECTIONS){
+    p("→ Suppression : "+sec,"info");
+    const snap = await getDocs(collection(db, sec));
+    const batch = writeBatch(db);
+    snap.docs.forEach(d => batch.delete(doc(db, sec, d.id)));
+    await batch.commit();
+    p("  ✓ "+snap.docs.length+" documents supprimés","ok");
+  }
+
+  p("\nAjout des données officielles...\n","info");
+  let total = 0;
+  for(const [sec, items] of Object.entries(DATA)){
+    p("→ Section : "+sec,"info");
+    for(let i=0; i<items.length; i++){
+      const obj = Object.assign({}, items[i], {id:items[i].name, order:i*10});
+      try{
+        await addDoc(collection(db, sec), obj);
+        p("  ✓ "+items[i].name,"ok");
+        total++;
+      } catch(e){
+        p("  ✗ "+items[i].name+" : "+e.message,"err");
+      }
+    }
+  }
+
+  p("\n✓ Terminé ! "+total+" éléments chargés proprement.","ok");
+  p("Fermez cette page et retournez sur le portail.","info");
+});
+</script>
+</body>
+</html>
