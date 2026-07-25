@@ -16,205 +16,182 @@
 body{min-height:100vh;background:radial-gradient(ellipse at top,#0a2338 0%,var(--bg) 60%);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;}
 .scanline{position:fixed;inset:0;pointer-events:none;z-index:100;background:repeating-linear-gradient(to bottom,rgba(95,212,255,.022) 0px,rgba(95,212,255,.022) 1px,transparent 1px,transparent 3px);mix-blend-mode:screen;}
 h1,h2,h3,h4{font-family:'Space Mono',monospace;color:#eaf6ff;}
-.eyebrow{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--acc);text-transform:uppercase;}
 .mono{font-family:'Space Mono',monospace;}
+.eyebrow{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--acc);text-transform:uppercase;}
 
-/* NAV */
 nav{background:var(--panel);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:50;}
 nav h1{font-size:16px;}
 .nav-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-.back-btn{font-family:'Space Mono',monospace;font-size:11px;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:8px 14px;border-radius:6px;cursor:pointer;}
-.back-btn:hover{color:var(--accB);border-color:var(--acc);}
+.back-btn{font-family:'Space Mono',monospace;font-size:11px;color:var(--dim);border:1px solid var(--line);padding:8px 14px;border-radius:6px;cursor:pointer;text-decoration:none;display:inline-block;}
+.back-btn:hover,.back-btn:active{color:var(--accB);border-color:var(--acc);}
 .who-badge{font-family:'Space Mono',monospace;font-size:11px;color:var(--dim);}
 .who-badge b{color:var(--accB);font-weight:400;}
+.edit-badge{font-family:'Space Mono',monospace;font-size:10px;color:#8ff0d3;background:#0f3229;border:1px solid #1f8a6b;padding:4px 10px;border-radius:4px;}
 
-/* HOME */
-#homeView{max-width:1000px;margin:0 auto;padding:30px 16px 80px;}
-.dept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:24px;}
+/* PAGES */
+.page{display:none;max-width:1000px;margin:0 auto;padding:24px 16px 80px;}
+.page.active{display:block;}
+
+/* DEPT GRID */
+.dept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:20px;}
 .dept-card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color .15s,transform .1s;position:relative;}
-.dept-card:hover{border-color:var(--acc);transform:translateY(-2px);}
+.dept-card:hover{border-color:var(--acc);}
+.dept-card:active{transform:scale(.98);}
 .dept-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--acc),transparent);}
-.dept-card-img{width:100%;height:160px;object-fit:cover;display:block;background:#07111d;}
-.dept-card-noimg{width:100%;height:160px;background:linear-gradient(135deg,#07111d,#0d2438);display:flex;align-items:center;justify-content:center;}
-.dept-card-noimg span{font-family:'Space Mono',monospace;font-size:28px;opacity:.3;}
-.dept-card-body{padding:18px;}
+.dept-card-img{width:100%;height:150px;object-fit:cover;display:block;background:#07111d;}
+.dept-card-noimg{width:100%;height:150px;background:linear-gradient(135deg,#07111d,#0d2438);display:flex;align-items:center;justify-content:center;font-size:36px;}
+.dept-card-body{padding:16px;}
 .dept-card-tag{font-family:'Space Mono',monospace;font-size:10px;color:var(--acc);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
-.dept-card-title{font-size:16px;font-family:'Space Mono',monospace;color:#eaf6ff;margin-bottom:6px;}
-.dept-card-desc{font-size:12.5px;color:var(--dim);line-height:1.5;}
+.dept-card-title{font-size:14px;font-family:'Space Mono',monospace;color:#eaf6ff;margin-bottom:6px;line-height:1.4;}
+.dept-card-desc{font-size:12px;color:var(--dim);line-height:1.5;}
 
-/* DEPT PAGE */
-#deptView{display:none;max-width:1000px;margin:0 auto;padding:30px 16px 80px;}
-.dept-hero{border-radius:8px;overflow:hidden;border:1px solid var(--line);margin-bottom:28px;position:relative;}
-.dept-hero-img{width:100%;height:220px;object-fit:cover;display:block;background:#07111d;}
-.dept-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(4,13,23,.9) 0%,transparent 60%);display:flex;align-items:flex-end;padding:24px;}
-.dept-hero-overlay h2{font-size:22px;}
-.dept-hero-noimg{height:120px;background:linear-gradient(135deg,#07111d,#0d2438);display:flex;align-items:center;padding:24px;}
+/* DEPT DETAIL */
+.dept-hero{border-radius:8px;overflow:hidden;border:1px solid var(--line);margin-bottom:24px;position:relative;}
+.dept-hero img{width:100%;height:200px;object-fit:cover;display:block;}
+.dept-hero-noimg{height:100px;background:linear-gradient(135deg,#07111d,#0d2438);display:flex;align-items:center;padding:20px;gap:12px;}
+.dept-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(4,13,23,.85) 0%,transparent 60%);display:flex;align-items:flex-end;justify-content:space-between;padding:18px;flex-wrap:wrap;gap:10px;}
+.dept-hero-overlay h2{font-size:18px;line-height:1.3;}
 
 /* SECTIONS */
-.section-block{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:8px;margin-bottom:20px;overflow:hidden;}
-.section-block::before{content:'';display:block;height:2px;background:linear-gradient(90deg,var(--acc),transparent);}
-.section-head{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;cursor:pointer;flex-wrap:wrap;}
-.section-head h3{font-size:14px;letter-spacing:.05em;}
-.section-toggle{font-family:'Space Mono',monospace;font-size:14px;color:var(--dim);transition:transform .2s;}
-.section-toggle.open{transform:rotate(180deg);}
-.section-content{padding:0 20px 20px;display:none;}
-.section-content.open{display:block;}
-
-/* PROTOCOLE */
-.protocole-text{font-size:13.5px;line-height:1.8;color:var(--ink);white-space:pre-wrap;padding:14px;background:var(--bg);border:1px solid var(--line);border-radius:6px;min-height:80px;}
-.protocole-placeholder{color:var(--dim);font-style:italic;}
+.sec-block{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:8px;margin-bottom:14px;overflow:hidden;}
+.sec-block::before{content:'';display:block;height:2px;background:linear-gradient(90deg,var(--acc),transparent);}
+.sec-head{padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;user-select:none;}
+.sec-head h3{font-size:13px;letter-spacing:.04em;flex:1;}
+.sec-arrow{font-family:'Space Mono',monospace;font-size:12px;color:var(--dim);transition:transform .2s;flex-shrink:0;}
+.sec-arrow.open{transform:rotate(180deg);}
+.sec-body{padding:0 18px 18px;display:none;}
+.sec-body.open{display:block;}
+.proto-box{font-size:13.5px;line-height:1.8;color:var(--ink);white-space:pre-wrap;padding:14px;background:var(--bg);border:1px solid var(--line);border-radius:6px;min-height:60px;}
+.proto-empty{color:var(--dim);font-style:italic;font-size:13px;}
 
 /* MEMBRES */
-.membres-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:14px;}
-.membre-card{background:var(--bg);border:1px solid var(--line);border-radius:6px;overflow:hidden;cursor:pointer;transition:border-color .15s;}
-.membre-card:hover{border-color:var(--acc);}
-.membre-card img{width:100%;height:100px;object-fit:cover;display:block;background:#07111d;}
-.membre-card-noimg{width:100%;height:100px;background:#07111d;display:flex;align-items:center;justify-content:center;font-size:24px;}
-.membre-card-info{padding:10px 12px;}
-.membre-card-name{font-family:'Space Mono',monospace;font-size:11.5px;color:var(--accB);}
-.membre-card-role{font-size:11px;color:var(--dim);margin-top:2px;}
+.membres-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:14px;}
+.mb-card{background:var(--bg);border:1px solid var(--line);border-radius:6px;overflow:hidden;cursor:pointer;transition:border-color .15s;}
+.mb-card:hover{border-color:var(--acc);}
+.mb-card img{width:100%;height:90px;object-fit:cover;display:block;}
+.mb-card-noimg{width:100%;height:90px;background:#07111d;display:flex;align-items:center;justify-content:center;font-size:22px;}
+.mb-card-info{padding:8px 10px;}
+.mb-card-name{font-family:'Space Mono',monospace;font-size:11px;color:var(--accB);line-height:1.3;}
+.mb-card-role{font-size:11px;color:var(--dim);margin-top:2px;}
 
-/* EDIT */
-.edit-bar{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
-.btn{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:transparent;border:1px solid var(--acc);color:var(--accB);padding:10px 16px;border-radius:6px;cursor:pointer;min-height:44px;touch-action:manipulation;transition:background .15s;}
+/* BTNS */
+.btn{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:transparent;border:1px solid var(--acc);color:var(--accB);padding:10px 16px;border-radius:6px;cursor:pointer;min-height:44px;touch-action:manipulation;transition:background .15s;display:inline-flex;align-items:center;gap:6px;}
 .btn:active{background:rgba(47,168,209,.15);}
-.btn.sm{padding:8px 12px;font-size:10px;min-height:38px;}
 .btn.ghost{border-color:var(--line);color:var(--dim);}
 .btn.danger{border-color:var(--danger);color:var(--danger);}
 .btn.danger:active{background:rgba(255,157,157,.1);}
-label{display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:6px;margin-top:14px;}
-input[type=text],textarea{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);font-family:'IBM Plex Sans';font-size:15px;padding:12px;border-radius:6px;margin-bottom:4px;}
-textarea{min-height:200px;resize:vertical;line-height:1.7;}
-input:focus,textarea:focus{outline:2px solid var(--accB);outline-offset:1px;}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+
+/* FORM */
+.form-label{display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:14px 0 6px;}
+.form-input{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);font-family:'IBM Plex Sans';font-size:15px;padding:12px;border-radius:6px;}
+.form-input:focus{outline:2px solid var(--accB);outline-offset:1px;}
+textarea.form-input{min-height:180px;resize:vertical;line-height:1.7;}
 input[type=file]{display:none;}
-.file-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:var(--bg);border:2px dashed var(--line);color:var(--dim);font-family:'Space Mono',monospace;font-size:11px;padding:14px;border-radius:6px;margin-bottom:4px;cursor:pointer;min-height:50px;touch-action:manipulation;text-transform:uppercase;}
-.file-btn:active{border-color:var(--acc);color:var(--accB);}
-.file-btn.has-img{border-color:var(--acc);color:var(--accB);}
-.img-preview{width:100%;max-height:180px;object-fit:cover;border-radius:6px;margin-top:8px;display:none;}
+.file-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:var(--bg);border:2px dashed var(--line);color:var(--dim);font-family:'Space Mono',monospace;font-size:11px;padding:14px;border-radius:6px;cursor:pointer;min-height:50px;touch-action:manipulation;text-transform:uppercase;letter-spacing:.06em;}
+.file-btn:active,.file-btn.has{border-color:var(--acc);color:var(--accB);}
+.img-prev{width:100%;max-height:160px;object-fit:cover;border-radius:6px;margin-top:8px;display:none;}
 
 /* MODAL */
-.moverlay{position:fixed;inset:0;background:rgba(4,13,23,.92);z-index:300;display:flex;align-items:flex-end;justify-content:center;}
-@media(min-width:600px){.moverlay{align-items:center;padding:16px;}}
-.mbox{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--acc);border-radius:16px 16px 0 0;max-width:640px;width:100%;max-height:92vh;overflow-y:auto;position:relative;}
+.ov{position:fixed;inset:0;background:rgba(4,13,23,.93);z-index:200;display:none;align-items:flex-end;justify-content:center;}
+.ov.active{display:flex;}
+@media(min-width:600px){.ov{align-items:center;padding:16px;}}
+.mbox{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--acc);border-radius:16px 16px 0 0;max-width:660px;width:100%;max-height:92vh;overflow-y:auto;position:relative;}
 @media(min-width:600px){.mbox{border-radius:8px;}}
-.mbox::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--acc),transparent);}
-.mclose{position:absolute;top:12px;right:14px;background:var(--bg);border:1px solid var(--line);color:var(--ink);font-size:16px;cursor:pointer;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:10;}
+.mbox::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--acc),transparent);border-radius:16px 16px 0 0;}
+.mclose{position:absolute;top:12px;right:14px;background:var(--bg);border:1px solid var(--line);color:var(--ink);font-size:16px;cursor:pointer;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:10;font-family:'Space Mono',monospace;}
 .minner{padding:22px 20px 40px;}
-.minner h3{font-family:'Space Mono',monospace;font-size:16px;margin-bottom:12px;}
-.minner .mdesc{font-size:13.5px;line-height:1.7;color:var(--ink);}
+.minner h3{font-family:'Space Mono',monospace;font-size:16px;margin-bottom:16px;}
 
-/* LOADING */
-.loading{font-family:'Space Mono',monospace;font-size:12px;color:var(--dim);padding:20px;text-align:center;}
-.sync-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--acc);margin-right:6px;animation:pulse 1.2s infinite;}
-@keyframes pulse{0%,100%{opacity:.3;}50%{opacity:1;}}
-
-footer{text-align:center;font-family:'Space Mono',monospace;font-size:10px;color:var(--dim);margin-top:40px;letter-spacing:.05em;}
+.loading{font-family:'Space Mono',monospace;font-size:12px;color:var(--dim);padding:16px 0;text-align:center;}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--acc);margin-right:6px;animation:p 1.2s infinite;}
+@keyframes p{0%,100%{opacity:.3;}50%{opacity:1;}}
+footer{text-align:center;font-family:'Space Mono',monospace;font-size:10px;color:var(--dim);margin-top:40px;}
 </style>
 </head>
 <body>
 <div class="scanline"></div>
 
 <nav>
-  <div>
-    <div class="eyebrow">Fondation SCP · Site-72</div>
-    <h1>Départements</h1>
-  </div>
+  <div><div class="eyebrow">Fondation SCP · Site-72</div><h1>Départements</h1></div>
   <div class="nav-right">
-    <div class="who-badge" id="whoBadge" style="display:none;">
-      <b id="whoName"></b> — <span id="whoRole"></span>
-    </div>
+    <span class="who-badge" id="whoBadge"></span>
+    <span class="edit-badge" id="editBadge" style="display:none;"> Modification activée</span>
     <a class="back-btn" href="portail-5.html">← Portail</a>
   </div>
 </nav>
 
-<!-- HOME : liste des départements -->
-<div id="homeView">
-  <div style="margin-bottom:4px;margin-top:4px;">
-    <p style="font-size:13px;color:var(--dim);line-height:1.6;">Sélectionnez un département pour accéder à ses protocoles, son organigramme et ses membres.</p>
-  </div>
-  <div class="dept-grid" id="deptGrid">
-    <div class="loading"><span class="sync-dot"></span>Chargement...</div>
-  </div>
+<!-- PAGE ACCUEIL -->
+<div class="page active" id="pageHome">
+  <div class="dept-grid" id="deptGrid"><div class="loading"><span class="dot"></span>Chargement...</div></div>
+  <footer>SITE-72 · FONDATION SCP</footer>
 </div>
 
-<!-- DEPT PAGE -->
-<div id="deptView">
-  <div style="margin-bottom:18px;">
-    <span class="back-btn" onclick="goHome()" style="display:inline-flex;align-items:center;gap:6px;">← Retour aux départements</span>
+<!-- PAGE DÉPARTEMENT -->
+<div class="page" id="pageDept">
+  <div style="margin-bottom:16px;">
+    <span class="back-btn" id="backBtn">← Retour</span>
   </div>
   <div class="dept-hero" id="deptHero"></div>
   <div id="deptSections"></div>
   <footer>SITE-72 · FONDATION SCP · TOUTE MODIFICATION EST JOURNALISÉE</footer>
 </div>
 
-<!-- MODAL MEMBRE -->
-<div class="moverlay" id="membreModal" style="display:none;" onclick="membreOverlayClick(event)">
-  <div class="mbox">
-    <button class="mclose" onclick="closeMembreModal()">✕</button>
-    <div class="minner" id="membreInner"></div>
-  </div>
+<!-- MODAL : voir membre -->
+<div class="ov" id="ovMembre">
+  <div class="mbox"><button class="mclose" id="closeMembre"></button><div class="minner" id="innerMembre"></div></div>
 </div>
 
-<!-- MODAL EDIT PROTOCOLE -->
-<div class="moverlay" id="protocoleModal" style="display:none;" onclick="protocoleOverlayClick(event)">
-  <div class="mbox" style="max-width:700px;">
-    <button class="mclose" onclick="closeProtocoleModal()">✕</button>
+<!-- MODAL : éditer membre -->
+<div class="ov" id="ovEditMembre">
+  <div class="mbox"><button class="mclose" id="closeEditMembre"></button>
     <div class="minner">
-      <h3 id="protocoleModalTitle">Modifier le protocole</h3>
-      <label>Contenu</label>
-      <textarea id="protocoleText" placeholder="Rédigez le protocole ici..."></textarea>
-      <div class="edit-bar">
-        <button class="btn sm" onclick="saveProtocole()">Enregistrer</button>
-        <button class="btn sm ghost" onclick="closeProtocoleModal()">Annuler</button>
+      <h3 id="titleEditMembre">Membre</h3>
+      <span class="form-label">Nom</span><input class="form-input" id="me-name" type="text" placeholder="Nom">
+      <span class="form-label">Rôle</span><input class="form-input" id="me-role" type="text" placeholder="Rôle">
+      <span class="form-label">Description</span><textarea class="form-input" id="me-desc" placeholder="Description..."></textarea>
+      <span class="form-label">Image</span>
+      <input type="file" id="me-file" accept="image/*">
+      <div class="file-btn" id="me-filebtn"> <span id="me-filelabel">Choisir une image</span></div>
+      <img class="img-prev" id="me-prev">
+      <div class="btn-row">
+        <button class="btn" id="saveMembre">Enregistrer</button>
+        <button class="btn ghost" id="cancelEditMembre">Annuler</button>
+        <button class="btn danger" id="deleteMembre" style="display:none;">Supprimer</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL EDIT DEPT (image + desc) -->
-<div class="moverlay" id="deptEditModal" style="display:none;" onclick="deptEditOverlayClick(event)">
-  <div class="mbox" style="max-width:560px;">
-    <button class="mclose" onclick="closeDeptEditModal()">✕</button>
+<!-- MODAL : éditer protocole -->
+<div class="ov" id="ovEditProto">
+  <div class="mbox" style="max-width:700px;"><button class="mclose" id="closeEditProto"></button>
     <div class="minner">
-      <h3 id="deptEditTitle">Modifier le département</h3>
-      <label>Description courte</label>
-      <input type="text" id="de-desc" placeholder="Description affichée sur la carte">
-      <label>Image du département</label>
-      <input type="file" id="de-file" accept="image/*" onchange="previewDeImg(this)">
-      <div class="file-btn" id="de-file-btn" onclick="document.getElementById('de-file').click()">
-        <span>📷</span><span id="de-file-label">Choisir une image</span>
-      </div>
-      <img id="de-preview" class="img-preview">
-      <div class="edit-bar">
-        <button class="btn sm" onclick="saveDeptEdit()">Enregistrer</button>
-        <button class="btn sm ghost" onclick="closeDeptEditModal()">Annuler</button>
+      <h3 id="titleEditProto">Protocole</h3>
+      <span class="form-label">Contenu</span>
+      <textarea class="form-input" id="proto-text" style="min-height:240px;" placeholder="Rédigez le protocole..."></textarea>
+      <div class="btn-row">
+        <button class="btn" id="saveProto">Enregistrer</button>
+        <button class="btn ghost" id="cancelEditProto">Annuler</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL AJOUT MEMBRE -->
-<div class="moverlay" id="membreEditModal" style="display:none;" onclick="membreEditOverlayClick(event)">
-  <div class="mbox" style="max-width:560px;">
-    <button class="mclose" onclick="closeMembreEditModal()">✕</button>
+<!-- MODAL : éditer département (image+desc) -->
+<div class="ov" id="ovEditDept">
+  <div class="mbox" style="max-width:560px;"><button class="mclose" id="closeEditDept"></button>
     <div class="minner">
-      <h3 id="membreEditTitle">Ajouter un membre</h3>
-      <label>Nom / Identifiant</label>
-      <input type="text" id="me-name" placeholder="Nom du personnage">
-      <label>Rôle</label>
-      <input type="text" id="me-role" placeholder="Ex: Directeur, Agent...">
-      <label>Description</label>
-      <textarea id="me-desc" style="min-height:100px;" placeholder="Description du personnage..."></textarea>
-      <label>Image</label>
-      <input type="file" id="me-file" accept="image/*" onchange="previewMeImg(this)">
-      <div class="file-btn" id="me-file-btn" onclick="document.getElementById('me-file').click()">
-        <span>📷</span><span id="me-file-label">Choisir une image</span>
-      </div>
-      <img id="me-preview" class="img-preview">
-      <div class="edit-bar">
-        <button class="btn sm" onclick="saveMembre()">Enregistrer</button>
-        <button class="btn sm ghost" onclick="closeMembreEditModal()">Annuler</button>
-        <button class="btn sm danger" id="me-delete" onclick="deleteMembre()" style="display:none;">Supprimer</button>
+      <h3>Modifier le département</h3>
+      <span class="form-label">Description courte</span>
+      <input class="form-input" id="de-desc" type="text" placeholder="Description...">
+      <span class="form-label">Image</span>
+      <input type="file" id="de-file" accept="image/*">
+      <div class="file-btn" id="de-filebtn"> <span id="de-filelabel">Choisir une image</span></div>
+      <img class="img-prev" id="de-prev">
+      <div class="btn-row">
+        <button class="btn" id="saveDept">Enregistrer</button>
+        <button class="btn ghost" id="cancelEditDept">Annuler</button>
       </div>
     </div>
   </div>
@@ -224,571 +201,449 @@ footer{text-align:center;font-family:'Space Mono',monospace;font-size:10px;color
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, doc, getDocs, addDoc, setDoc, deleteDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBaoDKrtIJO8dLSnKw0puoLS5QjM1uZx_g",
-  authDomain: "site72-77f10.firebaseapp.com",
-  projectId: "site72-77f10",
-  storageBucket: "site72-77f10.firebasestorage.app",
-  messagingSenderId: "709748220198",
-  appId: "1:709748220198:web:06c3266d0790451f8361e7"
-};
-
-const app = initializeApp(firebaseConfig);
+const app = initializeApp({
+  apiKey:"AIzaSyBaoDKrtIJO8dLSnKw0puoLS5QjM1uZx_g",
+  authDomain:"site72-77f10.firebaseapp.com",
+  projectId:"site72-77f10",
+  storageBucket:"site72-77f10.firebasestorage.app",
+  messagingSenderId:"709748220198",
+  appId:"1:709748220198:web:06c3266d0790451f8361e7"
+});
 const db = getFirestore(app);
-window._db = db;
-window._col = collection;
-window._doc = doc;
-window._getDocs = getDocs;
-window._addDoc = addDoc;
-window._setDoc = setDoc;
-window._deleteDoc = deleteDoc;
-window._onSnapshot = onSnapshot;
-window._query = query;
-window._orderBy = orderBy;
-window._fbReady = true;
-window.dispatchEvent(new Event("fbReady"));
-</script>
 
-<script>
-const ACCOUNTS = {
-  "Invité13":   {password:"user13CB", role:"Invité",     canEdit:false},
-  "Modération": {password:"72STAFF",  role:"Modération", canEdit:true},
-  "S0S0":       {password:"S0S0BO",   role:"Staff",      canEdit:true},
-  "Fondateur":  {password:"HG72",     role:"Fondateur",  canEdit:true}
-};
+// --- HELPERS ----------------------------------------------
+const h = s => String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const $ = id => document.getElementById(id);
+const colRef = (path) => collection(db, path);
+const docRef = (path, id) => doc(db, path, id);
 
-// Définition des 8 départements
+function compress(file, cb) {
+  const r = new FileReader();
+  r.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const MAX = 600, c = document.createElement("canvas");
+      let w=img.width, hh=img.height;
+      if(w>hh){if(w>MAX){hh=Math.round(hh*MAX/w);w=MAX;}}else{if(hh>MAX){w=Math.round(w*MAX/hh);hh=MAX;}}
+      c.width=w; c.height=hh;
+      c.getContext("2d").drawImage(img,0,0,w,hh);
+      cb(c.toDataURL("image/jpeg",.65));
+    };
+    img.src = e.target.result;
+  };
+  r.readAsDataURL(file);
+}
+
+function openOv(id){ $(id).classList.add("active"); document.body.style.overflow="hidden"; }
+function closeOv(id){ $(id).classList.remove("active"); document.body.style.overflow=""; }
+
+// --- AUTH -------------------------------------------------
+const ADMINS = {"Modération":true,"S0S0":true,"Fondateur":true};
+let CU = null;
+
+function initAuth() {
+  let raw = null;
+  try { raw = localStorage.getItem("site72_user") || sessionStorage.getItem("site72_user"); } catch(e){}
+  if(raw) {
+    try {
+      const p = JSON.parse(raw);
+      if(p && p.name) {
+        CU = { name: p.name, role: p.role||"", canEdit: !!ADMINS[p.name] };
+      }
+    } catch(e){}
+  }
+  if(!CU) CU = {name:"Invité", role:"Invité", canEdit:false};
+  $("whoBadge").innerHTML = "<b>"+h(CU.name)+"</b> — "+h(CU.role);
+  $("editBadge").style.display = CU.canEdit ? "inline-flex" : "none";
+}
+
+// --- DEPTS CONFIG -----------------------------------------
 const DEPTS = [
-  {
-    id:"securitaire",
-    label:"Département Sécuritaire",
-    icon:"🛡️",
+  { id:"securitaire", label:"Département Sécuritaire", icon:"️",
     sections:[
-      {id:"presentation", label:"Présentation", type:"protocole"},
-      {id:"proto_zone_carcerale", label:"Section 1 — En Zone Carcérale", type:"protocole"},
-      {id:"proto_hors_zone", label:"Section 2 — Hors de la Zone Carcérale", type:"protocole"},
-      {id:"proto_experience", label:"Section 3 — En Expérience", type:"protocole"},
-      {id:"proto_confinement", label:"Section 4 — Protocole de Confinement", type:"protocole"},
-      {id:"proto_urgence", label:"Section 5 — Protocole d'Urgence & Brèche", type:"protocole"},
-      {id:"proto_fim", label:"Section 6 — Protocoles FIM", type:"protocole"},
-      {id:"membres", label:"Membres & Directeur de la Sécurité", type:"membres"}
+      {id:"presentation", label:"Présentation"},
+      {id:"s1_zone_carcerale", label:"Section 1 — En Zone Carcérale"},
+      {id:"s2_hors_zone", label:"Section 2 — Hors de la Zone Carcérale"},
+      {id:"s3_experience", label:"Section 3 — En Expérience"},
+      {id:"s4_confinement", label:"Section 4 — Protocole de Confinement"},
+      {id:"s5_urgence", label:"Section 5 — Protocole d'Urgence & Brèche"},
+      {id:"s6_fim", label:"Section 6 — Protocoles FIM"},
+      {id:"membres", label:"Membres & Directeur de la Sécurité", isMembres:true}
     ]
   },
-  {
-    id:"scientifique",
-    label:"Département Scientifique",
-    icon:"🔬",
+  { id:"scientifique", label:"Département Scientifique", icon:"",
     sections:[
-      {id:"presentation", label:"Présentation", type:"protocole"},
-      {id:"protocole_recherche", label:"Protocole de Recherche", type:"protocole"},
-      {id:"protocole_experience", label:"Protocole d'Expérimentation", type:"protocole"},
-      {id:"protocole_sécurité", label:"Protocole de Sécurité Scientifique", type:"protocole"},
-      {id:"membres", label:"Membres & Direction", type:"membres"}
+      {id:"presentation", label:"Présentation"},
+      {id:"protocole_recherche", label:"Protocole de Recherche"},
+      {id:"protocole_experience", label:"Protocole d'Expérimentation"},
+      {id:"protocole_securite", label:"Protocole de Sécurité Scientifique"},
+      {id:"membres", label:"Membres & Direction", isMembres:true}
     ]
   },
-  {
-    id:"medical",
-    label:"Département Médical",
-    icon:"⚕️",
+  { id:"medical", label:"Département Médical", icon:"️",
     sections:[
-      {id:"presentation", label:"Présentation", type:"protocole"},
-      {id:"protocole_soins", label:"Protocole de Soins", type:"protocole"},
-      {id:"protocole_exposition", label:"Protocole d'Exposition Anomale", type:"protocole"},
-      {id:"protocole_quarantaine", label:"Protocole de Quarantaine", type:"protocole"},
-      {id:"membres", label:"Membres & Direction", type:"membres"}
+      {id:"presentation", label:"Présentation"},
+      {id:"protocole_soins", label:"Protocole de Soins"},
+      {id:"protocole_exposition", label:"Protocole d'Exposition Anomale"},
+      {id:"protocole_quarantaine", label:"Protocole de Quarantaine"},
+      {id:"membres", label:"Membres & Direction Médicale", isMembres:true}
     ]
   },
-  {
-    id:"dist",
-    label:"DIST — Département Interne des Sciences et Technologies",
-    icon:"⚙️",
+  { id:"dist", label:"DIST — Sciences & Technologies", icon:"️",
     sections:[
-      {id:"presentation", label:"Présentation", type:"protocole"},
-      {id:"protocole_technique", label:"Protocole Technique", type:"protocole"},
-      {id:"protocole_maintenance", label:"Protocole de Maintenance", type:"protocole"},
-      {id:"membres", label:"Membres & Direction", type:"membres"}
+      {id:"presentation", label:"Présentation"},
+      {id:"protocole_technique", label:"Protocole Technique"},
+      {id:"protocole_maintenance", label:"Protocole de Maintenance"},
+      {id:"protocole_systemes", label:"Protocole des Systèmes Informatiques"},
+      {id:"membres", label:"Membres & Direction", isMembres:true}
     ]
   },
-  {
-    id:"administratif",
-    label:"Département Administratif",
-    icon:"📋",
+  { id:"administratif", label:"Département Administratif", icon:"",
     sections:[
-      {id:"presentation", label:"Présentation", type:"protocole"},
-      {id:"code_ethique", label:"Code Éthique", type:"protocole"},
-      {id:"protocole_admin", label:"Protocole Administratif", type:"protocole"},
-      {id:"membres", label:"Membres & Direction", type:"membres"}
+      {id:"presentation", label:"Présentation"},
+      {id:"code_ethique", label:"Code Éthique"},
+      {id:"protocole_admin", label:"Protocole Administratif"},
+      {id:"protocole_rh", label:"Ressources Humaines"},
+      {id:"membres", label:"Membres & Direction", isMembres:true}
     ]
   },
-  {
-    id:"justice",
-    label:"Justice Interne",
-    icon:"⚖️",
+  { id:"justice", label:"Justice Interne", icon:"️",
     sections:[
-      {id:"presentation", label:"Présentation", type:"protocole"},
-      {id:"code_penal", label:"Code Pénal Interne", type:"protocole"},
-      {id:"protocole_jugement", label:"Protocole de Jugement", type:"protocole"},
-      {id:"membres", label:"Membres & Juges", type:"membres"}
+      {id:"presentation", label:"Présentation"},
+      {id:"code_penal", label:"Code Pénal Interne"},
+      {id:"protocole_jugement", label:"Protocole de Jugement"},
+      {id:"protocole_sanctions", label:"Tableau des Sanctions"},
+      {id:"membres", label:"Membres & Juges", isMembres:true}
     ]
   },
-  {
-    id:"ops_ext",
-    label:"Département des Opérations Extérieures",
-    icon:"🌐",
+  { id:"ops_ext", label:"Opérations Extérieures", icon:"",
     sections:[
-      {id:"presentation", label:"Présentation", type:"protocole"},
-      {id:"protocole_mission", label:"Protocole de Mission Extérieure", type:"protocole"},
-      {id:"protocole_extraction", label:"Protocole d'Extraction", type:"protocole"},
-      {id:"membres", label:"Membres & Commandement", type:"membres"}
+      {id:"presentation", label:"Présentation"},
+      {id:"protocole_mission", label:"Protocole de Mission Extérieure"},
+      {id:"protocole_extraction", label:"Protocole d'Extraction"},
+      {id:"protocole_renseignement", label:"Protocole de Renseignement"},
+      {id:"membres", label:"Membres & Commandement", isMembres:true}
     ]
   },
-  {
-    id:"ops_int",
-    label:"Département des Opérations Intérieures",
-    icon:"🏢",
+  { id:"ops_int", label:"Opérations Intérieures", icon:"",
     sections:[
-      {id:"presentation", label:"Présentation", type:"protocole"},
-      {id:"protocole_surveillance", label:"Protocole de Surveillance Interne", type:"protocole"},
-      {id:"protocole_intervention", label:"Protocole d'Intervention Intérieure", type:"protocole"},
-      {id:"membres", label:"Membres & Commandement", type:"membres"}
+      {id:"presentation", label:"Présentation"},
+      {id:"protocole_surveillance", label:"Protocole de Surveillance Interne"},
+      {id:"protocole_intervention", label:"Protocole d'Intervention Intérieure"},
+      {id:"protocole_verrouillage", label:"Protocole de Verrouillage du Site"},
+      {id:"membres", label:"Membres & Commandement", isMembres:true}
     ]
   }
 ];
 
-let CU = null;
-let curDeptId = null;
-let editingProtocoleId = null;
-let editingMembreId = null;
-let unsubDept = null;
+// --- HOME --------------------------------------------------
+let curDept = null;
 let unsubMembres = null;
 
-/* ============================================================ AUTH */
-function initAuth(){
-  let stored = sessionStorage.getItem("site72_user") || localStorage.getItem("site72_user");
-  if(stored){
-    try{
-      const parsed = JSON.parse(stored);
-      // Vérifier que c'est un compte valide connu
-      const ACCOUNTS = {
-        "Invité13":   {canEdit:false},
-        "Modération": {canEdit:true},
-        "S0S0":       {canEdit:true},
-        "Fondateur":  {canEdit:true}
-      };
-      if(parsed && parsed.name && ACCOUNTS[parsed.name]){
-        parsed.canEdit = ACCOUNTS[parsed.name].canEdit;
-        CU = parsed;
-      }
-    } catch(e){ CU = null; }
-  }
-  if(!CU) CU = {name:"Invité", role:"Invité", canEdit:false};
-  showWho();
-}
-
-function showWho(){
-  document.getElementById("whoName").textContent = CU.name;
-  document.getElementById("whoRole").textContent = CU.role;
-  document.getElementById("whoBadge").style.display = "block";
-}
-
-/* ============================================================ FIREBASE */
-function waitFB(cb){
-  if(window._fbReady){ cb(); }
-  else{ window.addEventListener("fbReady", function h(){ window.removeEventListener("fbReady",h); cb(); }); }
-}
-
-function escH(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
-
-function compressImg(file, cb){
-  var reader = new FileReader();
-  reader.onload = function(e){
-    var img = new Image();
-    img.onload = function(){
-      var canvas = document.createElement("canvas");
-      var MAX = 600;
-      var w=img.width, h=img.height;
-      if(w>h){ if(w>MAX){h=Math.round(h*MAX/w);w=MAX;} }
-      else{ if(h>MAX){w=Math.round(w*MAX/h);h=MAX;} }
-      canvas.width=w; canvas.height=h;
-      canvas.getContext("2d").drawImage(img,0,0,w,h);
-      cb(canvas.toDataURL("image/jpeg",0.65));
-    };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-
-/* ============================================================ HOME */
-function goHome(){
-  if(unsubDept){ unsubDept(); unsubDept=null; }
-  if(unsubMembres){ unsubMembres(); unsubMembres=null; }
-  curDeptId = null;
-  document.getElementById("homeView").style.display = "block";
-  document.getElementById("deptView").style.display = "none";
-  renderHome();
-}
-window.goHome = goHome;
-
-function renderHome(){
-  const grid = document.getElementById("deptGrid");
-  grid.innerHTML = "<div class='loading'><span class='sync-dot'></span>Chargement...</div>";
-  waitFB(function(){
-    window._getDocs(window._col(window._db, "departements_meta")).then(function(snap){
-      const meta = {};
-      snap.docs.forEach(function(d){ meta[d.id] = d.data(); });
-      grid.innerHTML = "";
-      DEPTS.forEach(function(dept){
-        const m = meta[dept.id] || {};
-        const card = document.createElement("div");
-        card.className = "dept-card";
-        card.onclick = function(){ openDept(dept.id); };
-        let imgHtml = m.img
-          ? "<img class='dept-card-img' src='"+m.img+"' alt='"+dept.label+"'>"
-          : "<div class='dept-card-noimg'><span>"+dept.icon+"</span></div>";
-        card.innerHTML = imgHtml +
-          "<div class='dept-card-body'>" +
-          "<div class='dept-card-tag'>Département</div>" +
-          "<div class='dept-card-title'>"+escH(dept.label)+"</div>" +
-          "<div class='dept-card-desc'>"+escH(m.desc||"Cliquez pour accéder aux protocoles et membres.")+"</div>" +
-          "</div>";
-        grid.appendChild(card);
-      });
-    });
+async function renderHome() {
+  showPage("pageHome");
+  const grid = $("deptGrid");
+  grid.innerHTML = "<div class='loading'><span class='dot'></span>Chargement...</div>";
+  let metas = {};
+  try {
+    const snap = await getDocs(colRef("dept_metas"));
+    snap.docs.forEach(d => { metas[d.id] = d.data(); });
+  } catch(e){}
+  grid.innerHTML = "";
+  DEPTS.forEach(dept => {
+    const m = metas[dept.id] || {};
+    const card = document.createElement("div");
+    card.className = "dept-card";
+    card.onclick = () => openDept(dept.id);
+    card.innerHTML =
+      (m.img ? `<img class="dept-card-img" src="${m.img}" alt="">` : `<div class="dept-card-noimg"><span style="font-family:Space Mono,monospace;font-size:13px;color:var(--dim);letter-spacing:.1em;">DEPT</span></div>`) +
+      `<div class="dept-card-body">
+        <div class="dept-card-tag">Département</div>
+        <div class="dept-card-title">${h(dept.label)}</div>
+        <div class="dept-card-desc">${h(m.desc||"Cliquez pour accéder aux protocoles et membres.")}</div>
+      </div>`;
+    grid.appendChild(card);
   });
 }
 
-/* ============================================================ DEPT PAGE */
-function openDept(id){
-  curDeptId = id;
-  document.getElementById("homeView").style.display = "none";
-  document.getElementById("deptView").style.display = "block";
-  const dept = DEPTS.find(function(d){ return d.id===id; });
-  if(!dept) return;
+// --- DEPT --------------------------------------------------
+async function openDept(id) {
+  if(unsubMembres){ unsubMembres(); unsubMembres=null; }
+  curDept = DEPTS.find(d => d.id===id);
+  if(!curDept) return;
+  showPage("pageDept");
 
   // Hero
-  waitFB(function(){
-    window._getDocs(window._col(window._db,"departements_meta")).then(function(snap){
-      const d = snap.docs.find(function(x){ return x.id===id; });
-      const m = d ? d.data() : {};
-      const hero = document.getElementById("deptHero");
-      if(m.img){
-        hero.innerHTML = "<img class='dept-hero-img' src='"+m.img+"' alt='"+dept.label+"'>" +
-          "<div class='dept-hero-overlay'><h2>"+escH(dept.label)+"</h2></div>";
-      } else {
-        hero.innerHTML = "<div class='dept-hero-noimg'><h2>"+dept.icon+" "+escH(dept.label)+"</h2></div>";
-      }
-      if(CU.canEdit){
-        hero.innerHTML += "<button class='btn sm' style='position:absolute;top:12px;right:12px;' onclick='openDeptEditModal(\""+id+"\")'>✏️ Modifier</button>";
-      }
-    });
+  let meta = {};
+  try {
+    const snap = await getDocs(colRef("dept_metas"));
+    const d = snap.docs.find(x => x.id===id);
+    if(d) meta = d.data();
+  } catch(e){}
 
-    // Sections
-    renderSections(dept);
-  });
-}
-window.openDept = openDept;
+  const hero = $("deptHero");
+  if(meta.img){
+    hero.innerHTML = `<img src="${meta.img}" alt=""><div class="dept-hero-overlay"><h2>${h(curDept.label)}</h2>${CU.canEdit?`<button class="btn" onclick="openEditDept('${id}')">️ Modifier</button>`:""}</div>`;
+  } else {
+    hero.innerHTML = `<div class="dept-hero-noimg"><h2>${h(curDept.label)}</h2></div>${CU.canEdit?`<div style="padding:10px 18px;"><button class="btn" onclick="openEditDept('${id}')">️ Modifier le département</button></div>`:""}`;
+  }
 
-function renderSections(dept){
-  const container = document.getElementById("deptSections");
+  // Sections
+  const container = $("deptSections");
+  container.innerHTML = "<div class='loading'><span class='dot'></span>Chargement...</div>";
+
+  let protocoles = {};
+  try {
+    const snap = await getDocs(colRef("dept_"+id+"_proto"));
+    snap.docs.forEach(d => { protocoles[d.id] = d.data(); });
+  } catch(e){}
+
   container.innerHTML = "";
+  curDept.sections.forEach(sec => {
+    const block = document.createElement("div");
+    block.className = "sec-block";
+    block.id = "sec_"+sec.id;
 
-  // Charger tous les protocoles du département
-  waitFB(function(){
-    window._getDocs(window._col(window._db,"dept_"+dept.id+"_protocoles")).then(function(snap){
-      const protocoles = {};
-      snap.docs.forEach(function(d){ protocoles[d.id] = d.data(); });
-
-      dept.sections.forEach(function(sec){
-        const block = document.createElement("div");
-        block.className = "section-block";
-        block.id = "sec-"+sec.id;
-
-        if(sec.type === "protocole"){
-          const data = protocoles[sec.id] || {};
-          const text = data.content || "";
-          block.innerHTML =
-            "<div class='section-head' onclick='toggleSection(\"sec-"+sec.id+"\")'>" +
-            "<h3>"+escH(sec.label)+"</h3>" +
-            "<span class='section-toggle' id='toggle-sec-"+sec.id+"'>▼</span>" +
-            "</div>" +
-            "<div class='section-content' id='content-sec-"+sec.id+"'>" +
-            "<div class='protocole-text' id='text-"+sec.id+"'>" +
-            (text ? escH(text) : "<span class='protocole-placeholder'>Aucun contenu — cliquez sur Modifier pour rédiger ce protocole.</span>") +
-            "</div>" +
-            (CU.canEdit
-              ? "<div class='edit-bar'><button class='btn sm' onclick='openProtocoleModal(\""+dept.id+"\",\""+sec.id+"\",\""+escH(sec.label)+"\")'>✏️ Modifier</button></div>"
-              : "") +
-            "</div>";
-
-        } else if(sec.type === "membres"){
-          block.innerHTML =
-            "<div class='section-head' onclick='toggleSection(\"sec-"+sec.id+"\")'>" +
-            "<h3>"+escH(sec.label)+"</h3>" +
-            "<span class='section-toggle' id='toggle-sec-"+sec.id+"'>▼</span>" +
-            "</div>" +
-            "<div class='section-content' id='content-sec-"+sec.id+"'>" +
-            "<div class='membres-grid' id='membres-grid-"+dept.id+"'><div class='loading'><span class='sync-dot'></span>Chargement...</div></div>" +
-            (CU.canEdit
-              ? "<div class='edit-bar'><button class='btn sm' onclick='openMembreEditModal(\""+dept.id+"\",null)'>+ Ajouter un membre</button></div>"
-              : "") +
-            "</div>";
-
-          // Écoute temps réel des membres
-          listenMembres(dept.id);
-        }
-
-        container.appendChild(block);
-      });
-    });
+    if(sec.isMembres){
+      block.innerHTML = `
+        <div class="sec-head" onclick="toggleSec('${sec.id}')">
+          <h3>${h(sec.label)}</h3><span class="sec-arrow" id="arr_${sec.id}">v</span>
+        </div>
+        <div class="sec-body" id="body_${sec.id}">
+          <div class="membres-grid" id="mg_${id}"><div class="loading"><span class="dot"></span></div></div>
+          ${CU.canEdit?`<div class="btn-row"><button class="btn" onclick="openAddMembre('${id}')">+ Ajouter un membre</button></div>`:""}
+        </div>`;
+      listenMembres(id);
+    } else {
+      const data = protocoles[sec.id] || {};
+      const txt = data.content||"";
+      block.innerHTML = `
+        <div class="sec-head" onclick="toggleSec('${sec.id}')">
+          <h3>${h(sec.label)}</h3><span class="sec-arrow" id="arr_${sec.id}">v</span>
+        </div>
+        <div class="sec-body" id="body_${sec.id}">
+          <div class="proto-box" id="ptxt_${sec.id}">${txt ? h(txt) : "<span class='proto-empty'>Aucun contenu — cliquez sur Modifier pour rédiger ce protocole.</span>"}</div>
+          ${CU.canEdit?`<div class="btn-row"><button class="btn" onclick="openEditProto('${id}','${sec.id}','${h(sec.label)}')">️ Modifier</button></div>`:""}
+        </div>`;
+    }
+    container.appendChild(block);
   });
 }
 
-function toggleSection(id){
-  const content = document.getElementById("content-"+id);
-  const toggle = document.getElementById("toggle-"+id);
-  if(!content) return;
-  const isOpen = content.classList.contains("open");
-  content.classList.toggle("open", !isOpen);
-  if(toggle) toggle.classList.toggle("open", !isOpen);
+function toggleSec(id){
+  const body = $("body_"+id), arr = $("arr_"+id);
+  if(!body) return;
+  body.classList.toggle("open");
+  if(arr) arr.classList.toggle("open", body.classList.contains("open"));
 }
-window.toggleSection = toggleSection;
+window.toggleSec = toggleSec;
 
-/* ============================================================ MEMBRES */
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  $(id).classList.add("active");
+  window.scrollTo(0,0);
+}
+
+// --- MEMBRES ----------------------------------------------
 function listenMembres(deptId){
   if(unsubMembres){ unsubMembres(); }
-  waitFB(function(){
-    const q = window._query(window._col(window._db,"dept_"+deptId+"_membres"), window._orderBy("order","asc"));
-    unsubMembres = window._onSnapshot(q, function(snap){
-      const grid = document.getElementById("membres-grid-"+deptId);
+  try {
+    const q = query(colRef("dept_"+deptId+"_membres"), orderBy("order","asc"));
+    unsubMembres = onSnapshot(q, snap => {
+      const grid = $("mg_"+deptId);
       if(!grid) return;
-      const items = snap.docs.map(function(d){ return Object.assign({_id:d.id},d.data()); });
+      const items = snap.docs.map(d => ({_id:d.id,...d.data()}));
       if(!items.length){
         grid.innerHTML = "<p style='font-size:12px;color:var(--dim);font-family:Space Mono,monospace;'>Aucun membre enregistré.</p>";
         return;
       }
       grid.innerHTML = "";
-      items.forEach(function(m){
+      items.forEach(m => {
         const card = document.createElement("div");
-        card.className = "membre-card";
-        card.onclick = function(){ openMembreModal(m, deptId); };
+        card.className = "mb-card";
+        card.onclick = () => openViewMembre(m, deptId);
         card.innerHTML =
-          (m.img ? "<img src='"+m.img+"' alt='"+escH(m.name)+"'>" : "<div class='membre-card-noimg'>👤</div>") +
-          "<div class='membre-card-info'>" +
-          "<div class='membre-card-name'>"+escH(m.name||"")+"</div>" +
-          "<div class='membre-card-role'>"+escH(m.role||"")+"</div>" +
-          "</div>";
+          (m.img?`<img src="${m.img}" alt="">`:`<div class="mb-card-noimg"></div>`) +
+          `<div class="mb-card-info"><div class="mb-card-name">${h(m.name||"")}</div><div class="mb-card-role">${h(m.role||"")}</div></div>`;
         grid.appendChild(card);
       });
     });
-  });
+  } catch(e){}
 }
 
-function openMembreModal(m, deptId){
-  const canEdit = CU && CU.canEdit;
-  let h = "";
-  if(m.img) h += "<img src='"+m.img+"' style='width:100%;max-height:220px;object-fit:cover;border-radius:6px;margin-bottom:14px;display:block;'>";
-  h += "<h3>"+escH(m.name||"")+"</h3>";
-  if(m.role) h += "<p style='font-family:Space Mono,monospace;font-size:11px;color:var(--acc);margin:4px 0 12px;'>"+escH(m.role)+"</p>";
-  if(m.desc) h += "<div class='mdesc'>"+escH(m.desc)+"</div>";
-  if(canEdit){
-    h += "<div style='display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;'>" +
-      "<button class='btn sm' onclick=\"closeMembreModal();openMembreEditModal('"+deptId+"','"+m._id+"')\">✏️ Modifier</button>" +
-      "<button class='btn sm danger' onclick=\"deleteMembreById('"+deptId+"','"+m._id+"')\">🗑️ Supprimer</button>" +
-      "</div>";
+let viewMembreData = null;
+let viewMembreDept = null;
+function openViewMembre(m, deptId){
+  viewMembreData = m; viewMembreDept = deptId;
+  let html = "";
+  if(m.img) html += `<img src="${m.img}" style="width:100%;max-height:200px;object-fit:cover;border-radius:6px;margin-bottom:14px;display:block;">`;
+  html += `<h3>${h(m.name||"")}</h3>`;
+  if(m.role) html += `<p style="font-family:Space Mono,monospace;font-size:11px;color:var(--acc);margin:6px 0 12px;">${h(m.role)}</p>`;
+  if(m.desc) html += `<p style="font-size:13.5px;line-height:1.7;color:var(--ink);">${h(m.desc)}</p>`;
+  if(CU.canEdit){
+    html += `<div class="btn-row" style="margin-top:16px;">
+      <button class="btn" id="editMembreFromView">️ Modifier</button>
+      <button class="btn danger" id="delMembreFromView">️ Supprimer</button>
+    </div>`;
   }
-  document.getElementById("membreInner").innerHTML = h;
-  document.getElementById("membreModal").style.display = "flex";
-  document.body.style.overflow = "hidden";
+  $("innerMembre").innerHTML = html;
+  if(CU.canEdit){
+    $("editMembreFromView").onclick = () => { closeOv("ovMembre"); openEditMembre(deptId, m); };
+    $("delMembreFromView").onclick = () => doDeleteMembre(deptId, m._id);
+  }
+  openOv("ovMembre");
 }
-window.openMembreModal = openMembreModal;
+window.openViewMembre = openViewMembre;
 
-function closeMembreModal(){ document.getElementById("membreModal").style.display="none"; document.body.style.overflow=""; }
-function membreOverlayClick(e){ if(e.target===document.getElementById("membreModal")) closeMembreModal(); }
-window.closeMembreModal=closeMembreModal; window.membreOverlayClick=membreOverlayClick;
+// --- EDIT MEMBRE ------------------------------------------
+let editMembreDept = null;
+let editMembreId = null;
+let editMembreExistingImg = null;
 
-function deleteMembreById(deptId, id){
+function openAddMembre(deptId){
+  editMembreDept = deptId; editMembreId = null; editMembreExistingImg = null;
+  $("titleEditMembre").textContent = "Ajouter un membre";
+  $("me-name").value=""; $("me-role").value=""; $("me-desc").value="";
+  $("me-file").value=""; $("me-prev").style.display="none";
+  $("me-filebtn").classList.remove("has"); $("me-filelabel").textContent="Choisir une image";
+  $("deleteMembre").style.display="none";
+  openOv("ovEditMembre");
+}
+window.openAddMembre = openAddMembre;
+
+function openEditMembre(deptId, m){
+  editMembreDept = deptId; editMembreId = m._id; editMembreExistingImg = m.img||null;
+  $("titleEditMembre").textContent = "Modifier le membre";
+  $("me-name").value=m.name||""; $("me-role").value=m.role||""; $("me-desc").value=m.desc||"";
+  $("me-file").value=""; $("me-filebtn").classList.remove("has"); $("me-filelabel").textContent="Choisir une image";
+  if(m.img){ $("me-prev").src=m.img; $("me-prev").style.display="block"; $("me-filebtn").classList.add("has"); }
+  else{ $("me-prev").style.display="none"; }
+  $("deleteMembre").style.display="inline-flex";
+  openOv("ovEditMembre");
+}
+
+$("me-filebtn").onclick = () => $("me-file").click();
+$("me-file").onchange = () => {
+  const f = $("me-file").files[0]; if(!f) return;
+  $("me-filelabel").textContent = f.name.substring(0,20);
+  $("me-filebtn").classList.add("has");
+  const r=new FileReader(); r.onload=e=>{ $("me-prev").src=e.target.result; $("me-prev").style.display="block"; }; r.readAsDataURL(f);
+};
+
+$("saveMembre").onclick = async () => {
+  const name = $("me-name").value.trim();
+  if(!name){ alert("Nom obligatoire."); return; }
+  const obj = { name, role:$("me-role").value.trim(), desc:$("me-desc").value.trim(), order:Date.now() };
+  const f = $("me-file").files[0];
+  async function doSave(img){
+    if(img) obj.img=img;
+    else if(editMembreExistingImg) obj.img=editMembreExistingImg;
+    if(editMembreId){ await setDoc(docRef("dept_"+editMembreDept+"_membres",editMembreId),obj); }
+    else{ await addDoc(colRef("dept_"+editMembreDept+"_membres"),obj); }
+    closeOv("ovEditMembre");
+  }
+  if(f){ compress(f, img => doSave(img)); }
+  else{ doSave(null); }
+};
+
+$("deleteMembre").onclick = () => { if(editMembreId) doDeleteMembre(editMembreDept, editMembreId); };
+
+async function doDeleteMembre(deptId, id){
   if(!window.confirm("Supprimer ce membre ?")) return;
-  waitFB(function(){ window._deleteDoc(window._doc(window._db,"dept_"+deptId+"_membres",id)).then(function(){ closeMembreModal(); }); });
+  await deleteDoc(docRef("dept_"+deptId+"_membres",id));
+  closeOv("ovMembre"); closeOv("ovEditMembre");
 }
-window.deleteMembreById = deleteMembreById;
 
-/* ============================================================ EDIT MEMBRE */
-function openMembreEditModal(deptId, membreId){
-  editingMembreId = membreId;
-  document.getElementById("membreEditTitle").textContent = membreId ? "Modifier le membre" : "Ajouter un membre";
-  document.getElementById("me-name").value = "";
-  document.getElementById("me-role").value = "";
-  document.getElementById("me-desc").value = "";
-  document.getElementById("me-file").value = "";
-  document.getElementById("me-preview").style.display = "none";
-  document.getElementById("me-file-btn").classList.remove("has-img");
-  document.getElementById("me-file-label").textContent = "Choisir une image";
-  document.getElementById("me-delete").style.display = membreId ? "inline-flex" : "none";
-  // Store deptId
-  document.getElementById("me-delete").dataset.deptId = deptId;
-  document.getElementById("membreEditModal").dataset.deptId = deptId;
+$("closeMembre").onclick = () => closeOv("ovMembre");
+$("closeEditMembre").onclick = () => closeOv("ovEditMembre");
+$("cancelEditMembre").onclick = () => closeOv("ovEditMembre");
+$("ovMembre").onclick = e => { if(e.target===$("ovMembre")) closeOv("ovMembre"); };
+$("ovEditMembre").onclick = e => { if(e.target===$("ovEditMembre")) closeOv("ovEditMembre"); };
 
-  if(membreId){
-    waitFB(function(){
-      window._getDocs(window._col(window._db,"dept_"+deptId+"_membres")).then(function(snap){
-        const d = snap.docs.find(function(x){ return x.id===membreId; });
-        if(!d) return;
-        const m = d.data();
-        document.getElementById("me-name").value = m.name||"";
-        document.getElementById("me-role").value = m.role||"";
-        document.getElementById("me-desc").value = m.desc||"";
-        if(m.img){ document.getElementById("me-preview").src=m.img; document.getElementById("me-preview").style.display="block"; document.getElementById("me-file-btn").classList.add("has-img"); }
-      });
-    });
-  }
-  document.getElementById("membreEditModal").style.display = "flex";
-  document.body.style.overflow = "hidden";
+// --- EDIT PROTOCOLE ---------------------------------------
+let editProtoDept=null, editProtoSec=null;
+
+function openEditProto(deptId, secId, label){
+  editProtoDept=deptId; editProtoSec=secId;
+  $("titleEditProto").textContent = "Modifier : "+label;
+  $("proto-text").value="";
+  getDocs(colRef("dept_"+deptId+"_proto")).then(snap=>{
+    const d=snap.docs.find(x=>x.id===secId);
+    $("proto-text").value = d?(d.data().content||""):"";
+  });
+  openOv("ovEditProto");
 }
-window.openMembreEditModal = openMembreEditModal;
+window.openEditProto = openEditProto;
 
-function saveMembre(){
-  const name = document.getElementById("me-name").value.trim();
-  if(!name){ alert("Le nom est obligatoire."); return; }
-  const deptId = document.getElementById("membreEditModal").dataset.deptId;
-  const f = document.getElementById("me-file");
-  function doSave(imgData){
-    const obj = { name:name, role:document.getElementById("me-role").value.trim(), desc:document.getElementById("me-desc").value.trim(), order:Date.now() };
-    if(imgData) obj.img = imgData;
-    waitFB(function(){
-      if(editingMembreId){
-        window._getDocs(window._col(window._db,"dept_"+deptId+"_membres")).then(function(snap){
-          const d = snap.docs.find(function(x){ return x.id===editingMembreId; });
-          const existing = d?d.data():{};
-          if(!imgData&&existing.img) obj.img = existing.img;
-          window._setDoc(window._doc(window._db,"dept_"+deptId+"_membres",editingMembreId),obj).then(function(){ closeMembreEditModal(); });
-        });
-      } else {
-        window._addDoc(window._col(window._db,"dept_"+deptId+"_membres"),obj).then(function(){ closeMembreEditModal(); });
-      }
-    });
+$("saveProto").onclick = async () => {
+  const content = $("proto-text").value;
+  await setDoc(docRef("dept_"+editProtoDept+"_proto",editProtoSec),{content});
+  // Mise à jour immédiate
+  const el = $("ptxt_"+editProtoSec);
+  if(el) el.innerHTML = content ? h(content) : "<span class='proto-empty'>Aucun contenu.</span>";
+  closeOv("ovEditProto");
+};
+$("closeEditProto").onclick = () => closeOv("ovEditProto");
+$("cancelEditProto").onclick = () => closeOv("ovEditProto");
+$("ovEditProto").onclick = e => { if(e.target===$("ovEditProto")) closeOv("ovEditProto"); };
+
+// --- EDIT DEPT META ---------------------------------------
+let editDeptId=null, editDeptExistingImg=null;
+
+function openEditDept(id){
+  editDeptId=id; editDeptExistingImg=null;
+  $("de-file").value=""; $("de-prev").style.display="none";
+  $("de-filebtn").classList.remove("has"); $("de-filelabel").textContent="Choisir une image";
+  getDocs(colRef("dept_metas")).then(snap=>{
+    const d=snap.docs.find(x=>x.id===id);
+    const m=d?d.data():{};
+    $("de-desc").value=m.desc||"";
+    if(m.img){ editDeptExistingImg=m.img; $("de-prev").src=m.img; $("de-prev").style.display="block"; $("de-filebtn").classList.add("has"); }
+  });
+  openOv("ovEditDept");
+}
+window.openEditDept = openEditDept;
+
+$("de-filebtn").onclick = () => $("de-file").click();
+$("de-file").onchange = () => {
+  const f=$("de-file").files[0]; if(!f) return;
+  $("de-filelabel").textContent=f.name.substring(0,20); $("de-filebtn").classList.add("has");
+  const r=new FileReader(); r.onload=e=>{ $("de-prev").src=e.target.result; $("de-prev").style.display="block"; }; r.readAsDataURL(f);
+};
+
+$("saveDept").onclick = async () => {
+  const desc=$("de-desc").value.trim();
+  const f=$("de-file").files[0];
+  async function doSave(img){
+    const obj={desc};
+    if(img) obj.img=img;
+    else if(editDeptExistingImg) obj.img=editDeptExistingImg;
+    await setDoc(docRef("dept_metas",editDeptId),obj);
+    closeOv("ovEditDept");
+    openDept(editDeptId);
   }
-  if(f&&f.files&&f.files[0]){ compressImg(f.files[0], function(c){ doSave(c); }); }
+  if(f){ compress(f, img=>doSave(img)); }
   else{ doSave(null); }
-}
-window.saveMembre = saveMembre;
+};
+$("closeEditDept").onclick = () => closeOv("ovEditDept");
+$("cancelEditDept").onclick = () => closeOv("ovEditDept");
+$("ovEditDept").onclick = e => { if(e.target===$("ovEditDept")) closeOv("ovEditDept"); };
 
-function deleteMembre(){
-  const deptId = document.getElementById("me-delete").dataset.deptId;
-  if(!editingMembreId||!deptId) return;
-  if(!window.confirm("Supprimer ce membre définitivement ?")) return;
-  waitFB(function(){ window._deleteDoc(window._doc(window._db,"dept_"+deptId+"_membres",editingMembreId)).then(function(){ closeMembreEditModal(); }); });
-}
-window.deleteMembre = deleteMembre;
+// --- NAV --------------------------------------------------
+$("backBtn").onclick = () => {
+  if(unsubMembres){ unsubMembres(); unsubMembres=null; }
+  renderHome();
+};
 
-function previewMeImg(input){
-  if(!input.files||!input.files[0]) return;
-  document.getElementById("me-file-label").textContent = input.files[0].name.substring(0,20);
-  document.getElementById("me-file-btn").classList.add("has-img");
-  var r=new FileReader(); r.onload=function(e){ var p=document.getElementById("me-preview"); p.src=e.target.result; p.style.display="block"; }; r.readAsDataURL(input.files[0]);
-}
-window.previewMeImg = previewMeImg;
-
-function closeMembreEditModal(){ document.getElementById("membreEditModal").style.display="none"; document.body.style.overflow=""; }
-function membreEditOverlayClick(e){ if(e.target===document.getElementById("membreEditModal")) closeMembreEditModal(); }
-window.closeMembreEditModal=closeMembreEditModal; window.membreEditOverlayClick=membreEditOverlayClick;
-
-/* ============================================================ EDIT PROTOCOLE */
-function openProtocoleModal(deptId, secId, label){
-  editingProtocoleId = {deptId:deptId, secId:secId};
-  document.getElementById("protocoleModalTitle").textContent = "Modifier : "+label;
-  waitFB(function(){
-    window._getDocs(window._col(window._db,"dept_"+deptId+"_protocoles")).then(function(snap){
-      const d = snap.docs.find(function(x){ return x.id===secId; });
-      document.getElementById("protocoleText").value = d ? (d.data().content||"") : "";
-    });
-  });
-  document.getElementById("protocoleModal").style.display = "flex";
-  document.body.style.overflow = "hidden";
-}
-window.openProtocoleModal = openProtocoleModal;
-
-function saveProtocole(){
-  if(!editingProtocoleId) return;
-  const {deptId, secId} = editingProtocoleId;
-  const content = document.getElementById("protocoleText").value;
-  waitFB(function(){
-    window._setDoc(window._doc(window._db,"dept_"+deptId+"_protocoles",secId),{content:content}).then(function(){
-      // Mettre à jour l'affichage immédiatement
-      const textEl = document.getElementById("text-"+secId);
-      if(textEl) textEl.innerHTML = content ? escH(content) : "<span class='protocole-placeholder'>Aucun contenu.</span>";
-      closeProtocoleModal();
-    });
-  });
-}
-window.saveProtocole = saveProtocole;
-
-function closeProtocoleModal(){ document.getElementById("protocoleModal").style.display="none"; document.body.style.overflow=""; }
-function protocoleOverlayClick(e){ if(e.target===document.getElementById("protocoleModal")) closeProtocoleModal(); }
-window.closeProtocoleModal=closeProtocoleModal; window.protocoleOverlayClick=protocoleOverlayClick;
-
-/* ============================================================ EDIT DEPT META */
-function openDeptEditModal(id){
-  document.getElementById("deptEditTitle").textContent = "Modifier le département";
-  document.getElementById("de-file").value = "";
-  document.getElementById("de-preview").style.display = "none";
-  document.getElementById("de-file-btn").classList.remove("has-img");
-  document.getElementById("de-file-label").textContent = "Choisir une image";
-  document.getElementById("deptEditModal").dataset.deptId = id;
-  waitFB(function(){
-    window._getDocs(window._col(window._db,"departements_meta")).then(function(snap){
-      const d = snap.docs.find(function(x){ return x.id===id; });
-      const m = d?d.data():{};
-      document.getElementById("de-desc").value = m.desc||"";
-      if(m.img){ document.getElementById("de-preview").src=m.img; document.getElementById("de-preview").style.display="block"; document.getElementById("de-file-btn").classList.add("has-img"); }
-    });
-  });
-  document.getElementById("deptEditModal").style.display = "flex";
-  document.body.style.overflow = "hidden";
-}
-window.openDeptEditModal = openDeptEditModal;
-
-function saveDeptEdit(){
-  const id = document.getElementById("deptEditModal").dataset.deptId;
-  const desc = document.getElementById("de-desc").value.trim();
-  const f = document.getElementById("de-file");
-  function doSave(imgData){
-    waitFB(function(){
-      window._getDocs(window._col(window._db,"departements_meta")).then(function(snap){
-        const d = snap.docs.find(function(x){ return x.id===id; });
-        const existing = d?d.data():{};
-        const obj = {desc:desc};
-        if(imgData) obj.img = imgData;
-        else if(existing.img) obj.img = existing.img;
-        window._setDoc(window._doc(window._db,"departements_meta",id),obj).then(function(){ closeDeptEditModal(); openDept(id); });
-      });
-    });
-  }
-  if(f&&f.files&&f.files[0]){ compressImg(f.files[0], function(c){ doSave(c); }); }
-  else{ doSave(null); }
-}
-window.saveDeptEdit = saveDeptEdit;
-
-function previewDeImg(input){
-  if(!input.files||!input.files[0]) return;
-  document.getElementById("de-file-label").textContent = input.files[0].name.substring(0,20);
-  document.getElementById("de-file-btn").classList.add("has-img");
-  var r=new FileReader(); r.onload=function(e){ var p=document.getElementById("de-preview"); p.src=e.target.result; p.style.display="block"; }; r.readAsDataURL(input.files[0]);
-}
-window.previewDeImg = previewDeImg;
-
-function closeDeptEditModal(){ document.getElementById("deptEditModal").style.display="none"; document.body.style.overflow=""; }
-function deptEditOverlayClick(e){ if(e.target===document.getElementById("deptEditModal")) closeDeptEditModal(); }
-window.closeDeptEditModal=closeDeptEditModal; window.deptEditOverlayClick=deptEditOverlayClick;
-
-/* ============================================================ INIT */
-document.addEventListener("keydown",function(e){
+document.addEventListener("keydown", e => {
   if(e.key==="Escape"){
-    closeMembreModal(); closeProtocoleModal(); closeDeptEditModal(); closeMembreEditModal();
+    ["ovMembre","ovEditMembre","ovEditProto","ovEditDept"].forEach(closeOv);
   }
 });
 
+// --- INIT -------------------------------------------------
 initAuth();
-goHome();
+renderHome();
 </script>
 </body>
 </html>
