@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITE-72 — Départements</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+:root{
+  --bg:#040d17;--panel:#0a1c2e;--panel2:#0d2438;
+  --line:#1c3b52;--ink:#cfe3ef;--dim:#7fa1b8;
+  --acc:#2fa8d1;--accB:#5fd4ff;
+  --danger:#ff9d9d;--warn:#ffc98a;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{min-height:100vh;background:radial-gradient(ellipse at top,#0a2338 0%,var(--bg) 60%);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;}
+.scanline{position:fixed;inset:0;pointer-events:none;z-index:100;background:repeating-linear-gradient(to bottom,rgba(95,212,255,.022) 0px,rgba(95,212,255,.022) 1px,transparent 1px,transparent 3px);mix-blend-mode:screen;}
+h1,h2,h3,h4{font-family:'Space Mono',monospace;color:#eaf6ff;}
+.mono{font-family:'Space Mono',monospace;}
+.eyebrow{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--acc);text-transform:uppercase;}
+
+nav{background:var(--panel);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:50;}
+nav h1{font-size:16px;}
+.nav-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.back-btn{font-family:'Space Mono',monospace;font-size:11px;color:var(--dim);border:1px solid var(--line);padding:8px 14px;border-radius:6px;cursor:pointer;text-decoration:none;display:inline-block;}
+.back-btn:hover,.back-btn:active{color:var(--accB);border-color:var(--acc);}
+.who-badge{font-family:'Space Mono',monospace;font-size:11px;color:var(--dim);}
+.who-badge b{color:var(--accB);font-weight:400;}
+.edit-badge{font-family:'Space Mono',monospace;font-size:10px;color:#8ff0d3;background:#0f3229;border:1px solid #1f8a6b;padding:4px 10px;border-radius:4px;}
+
+/* PAGES */
+.page{display:none;max-width:1000px;margin:0 auto;padding:24px 16px 80px;}
+.page.active{display:block;}
+
+/* DEPT GRID */
+.dept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:20px;}
+.dept-card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color .15s,transform .1s;position:relative;}
+.dept-card:hover{border-color:var(--acc);}
+.dept-card:active{transform:scale(.98);}
+.dept-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--acc),transparent);}
+.dept-card-img{width:100%;height:150px;object-fit:cover;display:block;background:#07111d;}
+.dept-card-noimg{width:100%;height:150px;background:linear-gradient(135deg,#07111d,#0d2438);display:flex;align-items:center;justify-content:center;font-size:36px;}
+.dept-card-body{padding:16px;}
+.dept-card-tag{font-family:'Space Mono',monospace;font-size:10px;color:var(--acc);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.dept-card-title{font-size:14px;font-family:'Space Mono',monospace;color:#eaf6ff;margin-bottom:6px;line-height:1.4;}
+.dept-card-desc{font-size:12px;color:var(--dim);line-height:1.5;}
+
+/* DEPT DETAIL */
+.dept-hero{border-radius:8px;overflow:hidden;border:1px solid var(--line);margin-bottom:24px;position:relative;}
+.dept-hero img{width:100%;height:200px;object-fit:cover;display:block;}
+.dept-hero-noimg{height:100px;background:linear-gradient(135deg,#07111d,#0d2438);display:flex;align-items:center;padding:20px;gap:12px;}
+.dept-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(4,13,23,.85) 0%,transparent 60%);display:flex;align-items:flex-end;justify-content:space-between;padding:18px;flex-wrap:wrap;gap:10px;}
+.dept-hero-overlay h2{font-size:18px;line-height:1.3;}
+
+/* SECTIONS */
+.sec-block{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:8px;margin-bottom:14px;overflow:hidden;}
+.sec-block::before{content:'';display:block;height:2px;background:linear-gradient(90deg,var(--acc),transparent);}
+.sec-head{padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;user-select:none;}
+.sec-head h3{font-size:13px;letter-spacing:.04em;flex:1;}
+.sec-arrow{font-family:'Space Mono',monospace;font-size:12px;color:var(--dim);transition:transform .2s;flex-shrink:0;}
+.sec-arrow.open{transform:rotate(180deg);}
+.sec-body{padding:0 18px 18px;display:none;}
+.sec-body.open{display:block;}
+.proto-box{font-size:13.5px;line-height:1.8;color:var(--ink);white-space:pre-wrap;padding:14px;background:var(--bg);border:1px solid var(--line);border-radius:6px;min-height:60px;}
+.proto-empty{color:var(--dim);font-style:italic;font-size:13px;}
+
+/* MEMBRES */
+.membres-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:14px;}
+.mb-card{background:var(--bg);border:1px solid var(--line);border-radius:6px;overflow:hidden;cursor:pointer;transition:border-color .15s;}
+.mb-card:hover{border-color:var(--acc);}
+.mb-card img{width:100%;height:90px;object-fit:cover;display:block;}
+.mb-card-noimg{width:100%;height:90px;background:#07111d;display:flex;align-items:center;justify-content:center;font-size:22px;}
+.mb-card-info{padding:8px 10px;}
+.mb-card-name{font-family:'Space Mono',monospace;font-size:11px;color:var(--accB);line-height:1.3;}
+.mb-card-role{font-size:11px;color:var(--dim);margin-top:2px;}
+
+/* BTNS */
+.btn{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:transparent;border:1px solid var(--acc);color:var(--accB);padding:10px 16px;border-radius:6px;cursor:pointer;min-height:44px;touch-action:manipulation;transition:background .15s;display:inline-flex;align-items:center;gap:6px;}
+.btn:active{background:rgba(47,168,209,.15);}
+.btn.ghost{border-color:var(--line);color:var(--dim);}
+.btn.danger{border-color:var(--danger);color:var(--danger);}
+.btn.danger:active{background:rgba(255,157,157,.1);}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+
+/* FORM */
+.form-label{display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:14px 0 6px;}
+.form-input{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);font-family:'IBM Plex Sans';font-size:15px;padding:12px;border-radius:6px;}
+.form-input:focus{outline:2px solid var(--accB);outline-offset:1px;}
+textarea.form-input{min-height:180px;resize:vertical;line-height:1.7;}
+input[type=file]{display:none;}
+.file-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:var(--bg);border:2px dashed var(--line);color:var(--dim);font-family:'Space Mono',monospace;font-size:11px;padding:14px;border-radius:6px;cursor:pointer;min-height:50px;touch-action:manipulation;text-transform:uppercase;letter-spacing:.06em;}
+.file-btn:active,.file-btn.has{border-color:var(--acc);color:var(--accB);}
+.img-prev{width:100%;max-height:160px;object-fit:cover;border-radius:6px;margin-top:8px;display:none;}
+
+/* MODAL */
+.ov{position:fixed;inset:0;background:rgba(4,13,23,.93);z-index:200;display:none;align-items:flex-end;justify-content:center;}
+.ov.active{display:flex;}
+@media(min-width:600px){.ov{align-items:center;padding:16px;}}
+.mbox{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--acc);border-radius:16px 16px 0 0;max-width:660px;width:100%;max-height:92vh;overflow-y:auto;position:relative;}
+@media(min-width:600px){.mbox{border-radius:8px;}}
+.mbox::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--acc),transparent);border-radius:16px 16px 0 0;}
+.mclose{position:absolute;top:12px;right:14px;background:var(--bg);border:1px solid var(--line);color:var(--ink);font-size:16px;cursor:pointer;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:10;font-family:'Space Mono',monospace;}
+.minner{padding:22px 20px 40px;}
+.minner h3{font-family:'Space Mono',monospace;font-size:16px;margin-bottom:16px;}
+
+.loading{font-family:'Space Mono',monospace;font-size:12px;color:var(--dim);padding:16px 0;text-align:center;}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--acc);margin-right:6px;animation:p 1.2s infinite;}
+@keyframes p{0%,100%{opacity:.3;}50%{opacity:1;}}
+footer{text-align:center;font-family:'Space Mono',monospace;font-size:10px;color:var(--dim);margin-top:40px;}
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+
+<nav>
+  <div><div class="eyebrow">Fondation SCP · Site-72</div><h1>Départements</h1></div>
+  <div class="nav-right">
+    <span class="who-badge" id="whoBadge"></span>
+    <span class="edit-badge" id="editBadge" style="display:none;"> Modification activée</span>
+    <a class="back-btn" href="portail-5.html">← Portail</a>
+  </div>
+</nav>
+
+<!-- PAGE ACCUEIL -->
+<div class="page active" id="pageHome">
+  <div class="dept-grid" id="deptGrid"><div class="loading"><span class="dot"></span>Chargement...</div></div>
+  <footer>SITE-72 · FONDATION SCP</footer>
+</div>
+
+<!-- PAGE DÉPARTEMENT -->
+<div class="page" id="pageDept">
+  <div style="margin-bottom:16px;">
+    <span class="back-btn" id="backBtn">← Retour</span>
+  </div>
+  <div class="dept-hero" id="deptHero"></div>
+  <div id="deptSections"></div>
+  <footer>SITE-72 · FONDATION SCP · TOUTE MODIFICATION EST JOURNALISÉE</footer>
+</div>
+
+<!-- MODAL : voir membre -->
+<div class="ov" id="ovMembre">
+  <div class="mbox"><button class="mclose" id="closeMembre"></button><div class="minner" id="innerMembre"></div></div>
+</div>
+
+<!-- MODAL : éditer membre -->
+<div class="ov" id="ovEditMembre">
+  <div class="mbox"><button class="mclose" id="closeEditMembre"></button>
+    <div class="minner">
+      <h3 id="titleEditMembre">Membre</h3>
+      <span class="form-label">Nom</span><input class="form-input" id="me-name" type="text" placeholder="Nom">
+      <span class="form-label">Rôle</span><input class="form-input" id="me-role" type="text" placeholder="Rôle">
+      <span class="form-label">Description</span><textarea class="form-input" id="me-desc" placeholder="Description..."></textarea>
+      <span class="form-label">Image</span>
+      <input type="file" id="me-file" accept="image/*">
+      <div class="file-btn" id="me-filebtn"> <span id="me-filelabel">Choisir une image</span></div>
+      <img class="img-prev" id="me-prev">
+      <div class="btn-row">
+        <button class="btn" id="saveMembre">Enregistrer</button>
+        <button class="btn ghost" id="cancelEditMembre">Annuler</button>
+        <button class="btn danger" id="deleteMembre" style="display:none;">Supprimer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL : éditer protocole -->
+<div class="ov" id="ovEditProto">
+  <div class="mbox" style="max-width:700px;"><button class="mclose" id="closeEditProto"></button>
+    <div class="minner">
+      <h3 id="titleEditProto">Protocole</h3>
+      <span class="form-label">Contenu</span>
+      <textarea class="form-input" id="proto-text" style="min-height:240px;" placeholder="Rédigez le protocole..."></textarea>
+      <div class="btn-row">
+        <button class="btn" id="saveProto">Enregistrer</button>
+        <button class="btn ghost" id="cancelEditProto">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL : éditer département (image+desc) -->
+<div class="ov" id="ovEditDept">
+  <div class="mbox" style="max-width:560px;"><button class="mclose" id="closeEditDept"></button>
+    <div class="minner">
+      <h3>Modifier le département</h3>
+      <span class="form-label">Description courte</span>
+      <input class="form-input" id="de-desc" type="text" placeholder="Description...">
+      <span class="form-label">Image</span>
+      <input type="file" id="de-file" accept="image/*">
+      <div class="file-btn" id="de-filebtn"> <span id="de-filelabel">Choisir une image</span></div>
+      <img class="img-prev" id="de-prev">
+      <div class="btn-row">
+        <button class="btn" id="saveDept">Enregistrer</button>
+        <button class="btn ghost" id="cancelEditDept">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, doc, getDocs, addDoc, setDoc, deleteDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const app = initializeApp({
+  apiKey:"AIzaSyBaoDKrtIJO8dLSnKw0puoLS5QjM1uZx_g",
+  authDomain:"site72-77f10.firebaseapp.com",
+  projectId:"site72-77f10",
+  storageBucket:"site72-77f10.firebasestorage.app",
+  messagingSenderId:"709748220198",
+  appId:"1:709748220198:web:06c3266d0790451f8361e7"
+});
+const db = getFirestore(app);
+
+// --- HELPERS ----------------------------------------------
+const h = s => String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const $ = id => document.getElementById(id);
+const colRef = (path) => collection(db, path);
+const docRef = (path, id) => doc(db, path, id);
+
+function compress(file, cb) {
+  const r = new FileReader();
+  r.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const MAX = 600, c = document.createElement("canvas");
+      let w=img.width, hh=img.height;
+      if(w>hh){if(w>MAX){hh=Math.round(hh*MAX/w);w=MAX;}}else{if(hh>MAX){w=Math.round(w*MAX/hh);hh=MAX;}}
+      c.width=w; c.height=hh;
+      c.getContext("2d").drawImage(img,0,0,w,hh);
+      cb(c.toDataURL("image/jpeg",.65));
+    };
+    img.src = e.target.result;
+  };
+  r.readAsDataURL(file);
+}
+
+function openOv(id){ $(id).classList.add("active"); document.body.style.overflow="hidden"; }
+function closeOv(id){ $(id).classList.remove("active"); document.body.style.overflow=""; }
+
+// --- AUTH -------------------------------------------------
+const ADMINS = {"Modération":true,"S0S0":true,"Fondateur":true};
+let CU = null;
+
+function initAuth() {
+  let raw = null;
+  try { raw = localStorage.getItem("site72_user") || sessionStorage.getItem("site72_user"); } catch(e){}
+  if(raw) {
+    try {
+      const p = JSON.parse(raw);
+      if(p && p.name) {
+        CU = { name: p.name, role: p.role||"", canEdit: !!ADMINS[p.name] };
+      }
+    } catch(e){}
+  }
+  if(!CU) CU = {name:"Invité", role:"Invité", canEdit:false};
+  $("whoBadge").innerHTML = "<b>"+h(CU.name)+"</b> — "+h(CU.role);
+  $("editBadge").style.display = CU.canEdit ? "inline-flex" : "none";
+}
+
+// --- DEPTS CONFIG -----------------------------------------
+const DEPTS = [
+  { id:"securitaire", label:"Département Sécuritaire", icon:"️",
+    sections:[
+      {id:"presentation", label:"Présentation"},
+      {id:"s1_zone_carcerale", label:"Section 1 — En Zone Carcérale"},
+      {id:"s2_hors_zone", label:"Section 2 — Hors de la Zone Carcérale"},
+      {id:"s3_experience", label:"Section 3 — En Expérience"},
+      {id:"s4_confinement", label:"Section 4 — Protocole de Confinement"},
+      {id:"s5_urgence", label:"Section 5 — Protocole d'Urgence & Brèche"},
+      {id:"s6_fim", label:"Section 6 — Protocoles FIM"},
+      {id:"membres", label:"Membres & Directeur de la Sécurité", isMembres:true}
+    ]
+  },
+  { id:"scientifique", label:"Département Scientifique", icon:"",
+    sections:[
+      {id:"presentation", label:"Présentation"},
+      {id:"protocole_recherche", label:"Protocole de Recherche"},
+      {id:"protocole_experience", label:"Protocole d'Expérimentation"},
+      {id:"protocole_securite", label:"Protocole de Sécurité Scientifique"},
+      {id:"membres", label:"Membres & Direction", isMembres:true}
+    ]
+  },
+  { id:"medical", label:"Département Médical", icon:"️",
+    sections:[
+      {id:"presentation", label:"Présentation"},
+      {id:"protocole_soins", label:"Protocole de Soins"},
+      {id:"protocole_exposition", label:"Protocole d'Exposition Anomale"},
+      {id:"protocole_quarantaine", label:"Protocole de Quarantaine"},
+      {id:"membres", label:"Membres & Direction Médicale", isMembres:true}
+    ]
+  },
+  { id:"dist", label:"DIST — Sciences & Technologies", icon:"️",
+    sections:[
+      {id:"presentation", label:"Présentation"},
+      {id:"protocole_technique", label:"Protocole Technique"},
+      {id:"protocole_maintenance", label:"Protocole de Maintenance"},
+      {id:"protocole_systemes", label:"Protocole des Systèmes Informatiques"},
+      {id:"membres", label:"Membres & Direction", isMembres:true}
+    ]
+  },
+  { id:"administratif", label:"Département Administratif", icon:"",
+    sections:[
+      {id:"presentation", label:"Présentation"},
+      {id:"code_ethique", label:"Code Éthique"},
+      {id:"protocole_admin", label:"Protocole Administratif"},
+      {id:"protocole_rh", label:"Ressources Humaines"},
+      {id:"membres", label:"Membres & Direction", isMembres:true}
+    ]
+  },
+  { id:"justice", label:"Justice Interne", icon:"️",
+    sections:[
+      {id:"presentation", label:"Présentation"},
+      {id:"code_penal", label:"Code Pénal Interne"},
+      {id:"protocole_jugement", label:"Protocole de Jugement"},
+      {id:"protocole_sanctions", label:"Tableau des Sanctions"},
+      {id:"membres", label:"Membres & Juges", isMembres:true}
+    ]
+  },
+  { id:"ops_ext", label:"Opérations Extérieures", icon:"",
+    sections:[
+      {id:"presentation", label:"Présentation"},
+      {id:"protocole_mission", label:"Protocole de Mission Extérieure"},
+      {id:"protocole_extraction", label:"Protocole d'Extraction"},
+      {id:"protocole_renseignement", label:"Protocole de Renseignement"},
+      {id:"membres", label:"Membres & Commandement", isMembres:true}
+    ]
+  },
+  { id:"ops_int", label:"Opérations Intérieures", icon:"",
+    sections:[
+      {id:"presentation", label:"Présentation"},
+      {id:"protocole_surveillance", label:"Protocole de Surveillance Interne"},
+      {id:"protocole_intervention", label:"Protocole d'Intervention Intérieure"},
+      {id:"protocole_verrouillage", label:"Protocole de Verrouillage du Site"},
+      {id:"membres", label:"Membres & Commandement", isMembres:true}
+    ]
+  }
+];
+
+// --- HOME --------------------------------------------------
+let curDept = null;
+let unsubMembres = null;
+
+async function renderHome() {
+  showPage("pageHome");
+  const grid = $("deptGrid");
+  grid.innerHTML = "<div class='loading'><span class='dot'></span>Chargement...</div>";
+  let metas = {};
+  try {
+    const snap = await getDocs(colRef("dept_data"));
+    snap.docs.forEach(d => { const dd=d.data(); if(dd._type==="meta") metas[d.id.replace("_meta","")] = dd; });
+  } catch(e){}
+  grid.innerHTML = "";
+  DEPTS.forEach(dept => {
+    const m = metas[dept.id] || {};
+    const card = document.createElement("div");
+    card.className = "dept-card";
+    card.onclick = () => openDept(dept.id);
+    card.innerHTML =
+      (m.img ? `<img class="dept-card-img" src="${m.img}" alt="">` : `<div class="dept-card-noimg"><span style="font-family:Space Mono,monospace;font-size:13px;color:var(--dim);letter-spacing:.1em;">DEPT</span></div>`) +
+      `<div class="dept-card-body">
+        <div class="dept-card-tag">Département</div>
+        <div class="dept-card-title">${h(dept.label)}</div>
+        <div class="dept-card-desc">${h(m.desc||"Cliquez pour accéder aux protocoles et membres.")}</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+// --- DEPT --------------------------------------------------
+async function openDept(id) {
+  if(unsubMembres){ unsubMembres(); unsubMembres=null; }
+  curDept = DEPTS.find(d => d.id===id);
+  if(!curDept) return;
+  showPage("pageDept");
+
+  // Hero
+  let meta = {};
+  try {
+    const snap = await getDocs(colRef("dept_data"));
+    const d = snap.docs.find(x => x.id===id+"_meta");
+    if(d) meta = d.data();
+  } catch(e){}
+
+  const hero = $("deptHero");
+  if(meta.img){
+    hero.innerHTML = `<img src="${meta.img}" alt=""><div class="dept-hero-overlay"><h2>${h(curDept.label)}</h2>${CU.canEdit?`<button class="btn" onclick="openEditDept('${id}')">️ Modifier</button>`:""}</div>`;
+  } else {
+    hero.innerHTML = `<div class="dept-hero-noimg"><h2>${h(curDept.label)}</h2></div>${CU.canEdit?`<div style="padding:10px 18px;"><button class="btn" onclick="openEditDept('${id}')">️ Modifier le département</button></div>`:""}`;
+  }
+
+  // Sections
+  const container = $("deptSections");
+  container.innerHTML = "<div class='loading'><span class='dot'></span>Chargement...</div>";
+
+  let protocoles = {};
+  try {
+    const snap = await getDocs(colRef("dept_data"));
+    snap.docs.forEach(d => { const dd=d.data(); if(dd._type==="proto" && dd._dept===id) protocoles[dd._sec] = dd; });
+  } catch(e){}
+
+  container.innerHTML = "";
+  curDept.sections.forEach(sec => {
+    const block = document.createElement("div");
+    block.className = "sec-block";
+    block.id = "sec_"+sec.id;
+
+    if(sec.isMembres){
+      block.innerHTML = `
+        <div class="sec-head" onclick="toggleSec('${sec.id}')">
+          <h3>${h(sec.label)}</h3><span class="sec-arrow" id="arr_${sec.id}">v</span>
+        </div>
+        <div class="sec-body" id="body_${sec.id}">
+          <div class="membres-grid" id="mg_${id}"><div class="loading"><span class="dot"></span></div></div>
+          ${CU.canEdit?`<div class="btn-row"><button class="btn" onclick="openAddMembre('${id}')">+ Ajouter un membre</button></div>`:""}
+        </div>`;
+      listenMembres(id);
+    } else {
+      const data = protocoles[sec.id] || {};
+      const txt = data.content||"";
+      block.innerHTML = `
+        <div class="sec-head" onclick="toggleSec('${sec.id}')">
+          <h3>${h(sec.label)}</h3><span class="sec-arrow" id="arr_${sec.id}">v</span>
+        </div>
+        <div class="sec-body" id="body_${sec.id}">
+          <div class="proto-box" id="ptxt_${sec.id}">${txt ? h(txt) : "<span class='proto-empty'>Aucun contenu — cliquez sur Modifier pour rédiger ce protocole.</span>"}</div>
+          ${CU.canEdit?`<div class="btn-row"><button class="btn" onclick="openEditProto('${id}','${sec.id}','${h(sec.label)}')">️ Modifier</button></div>`:""}
+        </div>`;
+    }
+    container.appendChild(block);
+  });
+}
+
+function toggleSec(id){
+  const body = $("body_"+id), arr = $("arr_"+id);
+  if(!body) return;
+  body.classList.toggle("open");
+  if(arr) arr.classList.toggle("open", body.classList.contains("open"));
+}
+window.toggleSec = toggleSec;
+
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  $(id).classList.add("active");
+  window.scrollTo(0,0);
+}
+
+// --- MEMBRES ----------------------------------------------
+function listenMembres(deptId){
+  if(unsubMembres){ unsubMembres(); }
+  try {
+    const q = query(colRef("dept_data"), orderBy("order","asc"));
+    unsubMembres = onSnapshot(q, snap => {
+      const grid = $("mg_"+deptId);
+      if(!grid) return;
+      const items = snap.docs.filter(d => d.data()._type==="membre" && d.data()._dept===deptId).map(d => ({_id:d.id,...d.data()}));
+      if(!items.length){
+        grid.innerHTML = "<p style='font-size:12px;color:var(--dim);font-family:Space Mono,monospace;'>Aucun membre enregistré.</p>";
+        return;
+      }
+      grid.innerHTML = "";
+      items.forEach(m => {
+        const card = document.createElement("div");
+        card.className = "mb-card";
+        card.onclick = () => openViewMembre(m, deptId);
+        card.innerHTML =
+          (m.img?`<img src="${m.img}" alt="">`:`<div class="mb-card-noimg"></div>`) +
+          `<div class="mb-card-info"><div class="mb-card-name">${h(m.name||"")}</div><div class="mb-card-role">${h(m.role||"")}</div></div>`;
+        grid.appendChild(card);
+      });
+    });
+  } catch(e){}
+}
+
+let viewMembreData = null;
+let viewMembreDept = null;
+function openViewMembre(m, deptId){
+  viewMembreData = m; viewMembreDept = deptId;
+  let html = "";
+  if(m.img) html += `<img src="${m.img}" style="width:100%;max-height:200px;object-fit:cover;border-radius:6px;margin-bottom:14px;display:block;">`;
+  html += `<h3>${h(m.name||"")}</h3>`;
+  if(m.role) html += `<p style="font-family:Space Mono,monospace;font-size:11px;color:var(--acc);margin:6px 0 12px;">${h(m.role)}</p>`;
+  if(m.desc) html += `<p style="font-size:13.5px;line-height:1.7;color:var(--ink);">${h(m.desc)}</p>`;
+  if(CU.canEdit){
+    html += `<div class="btn-row" style="margin-top:16px;">
+      <button class="btn" id="editMembreFromView">️ Modifier</button>
+      <button class="btn danger" id="delMembreFromView">️ Supprimer</button>
+    </div>`;
+  }
+  $("innerMembre").innerHTML = html;
+  if(CU.canEdit){
+    $("editMembreFromView").onclick = () => { closeOv("ovMembre"); openEditMembre(deptId, m); };
+    $("delMembreFromView").onclick = () => doDeleteMembre(deptId, m._id);
+  }
+  openOv("ovMembre");
+}
+window.openViewMembre = openViewMembre;
+
+// --- EDIT MEMBRE ------------------------------------------
+let editMembreDept = null;
+let editMembreId = null;
+let editMembreExistingImg = null;
+
+function openAddMembre(deptId){
+  editMembreDept = deptId; editMembreId = null; editMembreExistingImg = null;
+  $("titleEditMembre").textContent = "Ajouter un membre";
+  $("me-name").value=""; $("me-role").value=""; $("me-desc").value="";
+  $("me-file").value=""; $("me-prev").style.display="none";
+  $("me-filebtn").classList.remove("has"); $("me-filelabel").textContent="Choisir une image";
+  $("deleteMembre").style.display="none";
+  openOv("ovEditMembre");
+}
+window.openAddMembre = openAddMembre;
+
+function openEditMembre(deptId, m){
+  editMembreDept = deptId; editMembreId = m._id; editMembreExistingImg = m.img||null;
+  $("titleEditMembre").textContent = "Modifier le membre";
+  $("me-name").value=m.name||""; $("me-role").value=m.role||""; $("me-desc").value=m.desc||"";
+  $("me-file").value=""; $("me-filebtn").classList.remove("has"); $("me-filelabel").textContent="Choisir une image";
+  if(m.img){ $("me-prev").src=m.img; $("me-prev").style.display="block"; $("me-filebtn").classList.add("has"); }
+  else{ $("me-prev").style.display="none"; }
+  $("deleteMembre").style.display="inline-flex";
+  openOv("ovEditMembre");
+}
+
+$("me-filebtn").onclick = () => $("me-file").click();
+$("me-file").onchange = () => {
+  const f = $("me-file").files[0]; if(!f) return;
+  $("me-filelabel").textContent = f.name.substring(0,20);
+  $("me-filebtn").classList.add("has");
+  const r=new FileReader(); r.onload=e=>{ $("me-prev").src=e.target.result; $("me-prev").style.display="block"; }; r.readAsDataURL(f);
+};
+
+$("saveMembre").onclick = async () => {
+  const name = $("me-name").value.trim();
+  if(!name){ alert("Nom obligatoire."); return; }
+  const obj = { name, role:$("me-role").value.trim(), desc:$("me-desc").value.trim(), order:Date.now() };
+  const f = $("me-file").files[0];
+  async function doSave(img){
+    if(img) obj.img=img;
+    else if(editMembreExistingImg) obj.img=editMembreExistingImg;
+    obj._type="membre"; obj._dept=editMembreDept;
+    if(editMembreId){ await setDoc(docRef("dept_data",editMembreId),obj); }
+    else{ await addDoc(colRef("dept_data"),obj); }
+    closeOv("ovEditMembre");
+  }
+  if(f){ compress(f, img => doSave(img)); }
+  else{ doSave(null); }
+};
+
+$("deleteMembre").onclick = () => { if(editMembreId) doDeleteMembre(editMembreDept, editMembreId); };
+
+async function doDeleteMembre(deptId, id){
+  if(!window.confirm("Supprimer ce membre ?")) return;
+  await deleteDoc(docRef("dept_data",id));
+  closeOv("ovMembre"); closeOv("ovEditMembre");
+}
+
+$("closeMembre").onclick = () => closeOv("ovMembre");
+$("closeEditMembre").onclick = () => closeOv("ovEditMembre");
+$("cancelEditMembre").onclick = () => closeOv("ovEditMembre");
+$("ovMembre").onclick = e => { if(e.target===$("ovMembre")) closeOv("ovMembre"); };
+$("ovEditMembre").onclick = e => { if(e.target===$("ovEditMembre")) closeOv("ovEditMembre"); };
+
+// --- EDIT PROTOCOLE ---------------------------------------
+let editProtoDept=null, editProtoSec=null;
+
+function openEditProto(deptId, secId, label){
+  editProtoDept=deptId; editProtoSec=secId;
+  $("titleEditProto").textContent = "Modifier : "+label;
+  $("proto-text").value="";
+  getDocs(colRef("dept_data")).then(snap=>{
+    const d=snap.docs.find(x=>x.data()._type==="proto" && x.data()._dept===deptId && x.data()._sec===secId);
+    $("proto-text").value = d?(d.data().content||""):"";
+  });
+  openOv("ovEditProto");
+}
+window.openEditProto = openEditProto;
+
+$("saveProto").onclick = async () => {
+  const content = $("proto-text").value;
+  // Chercher si doc existe déjà
+  const psnap = await getDocs(colRef("dept_data"));
+  const existing = psnap.docs.find(x=>x.data()._type==="proto" && x.data()._dept===editProtoDept && x.data()._sec===editProtoSec);
+  if(existing){
+    await setDoc(docRef("dept_data",existing.id),{content,_type:"proto",_dept:editProtoDept,_sec:editProtoSec});
+  } else {
+    await addDoc(colRef("dept_data"),{content,_type:"proto",_dept:editProtoDept,_sec:editProtoSec});
+  }
+  // Mise à jour immédiate
+  const el = $("ptxt_"+editProtoSec);
+  if(el) el.innerHTML = content ? h(content) : "<span class='proto-empty'>Aucun contenu.</span>";
+  closeOv("ovEditProto");
+};
+$("closeEditProto").onclick = () => closeOv("ovEditProto");
+$("cancelEditProto").onclick = () => closeOv("ovEditProto");
+$("ovEditProto").onclick = e => { if(e.target===$("ovEditProto")) closeOv("ovEditProto"); };
+
+// --- EDIT DEPT META ---------------------------------------
+let editDeptId=null, editDeptExistingImg=null;
+
+function openEditDept(id){
+  editDeptId=id; editDeptExistingImg=null;
+  $("de-file").value=""; $("de-prev").style.display="none";
+  $("de-filebtn").classList.remove("has"); $("de-filelabel").textContent="Choisir une image";
+  getDocs(colRef("dept_data")).then(snap=>{
+    const d=snap.docs.find(x=>x.id===id+"_meta");
+    const m=d?d.data():{};
+    $("de-desc").value=m.desc||""; if(m.img){ $("de-prev").src=m.img; $("de-prev").style.display="block"; $("de-filebtn").classList.add("has"); }
+  });
+  openOv("ovEditDept");
+}
+window.openEditDept = openEditDept;
+
+$("de-filebtn").onclick = () => $("de-file").click();
+$("de-file").onchange = () => {
+  const f=$("de-file").files[0]; if(!f) return;
+  $("de-filelabel").textContent=f.name.substring(0,20); $("de-filebtn").classList.add("has");
+  const r=new FileReader(); r.onload=e=>{ $("de-prev").src=e.target.result; $("de-prev").style.display="block"; }; r.readAsDataURL(f);
+};
+
+$("saveDept").onclick = async () => {
+  const desc=$("de-desc").value.trim();
+  const f=$("de-file").files[0];
+  async function doSave(img){
+    const obj={desc};
+    if(img) obj.img=img;
+    else if(editDeptExistingImg) obj.img=editDeptExistingImg;
+    await setDoc(docRef("dept_data",editDeptId+"_meta"),{...obj,_type:"meta"});
+    closeOv("ovEditDept");
+    openDept(editDeptId);
+  }
+  if(f){ compress(f, img=>doSave(img)); }
+  else{ doSave(null); }
+};
+$("closeEditDept").onclick = () => closeOv("ovEditDept");
+$("cancelEditDept").onclick = () => closeOv("ovEditDept");
+$("ovEditDept").onclick = e => { if(e.target===$("ovEditDept")) closeOv("ovEditDept"); };
+
+// --- NAV --------------------------------------------------
+$("backBtn").onclick = () => {
+  if(unsubMembres){ unsubMembres(); unsubMembres=null; }
+  renderHome();
+};
+
+document.addEventListener("keydown", e => {
+  if(e.key==="Escape"){
+    ["ovMembre","ovEditMembre","ovEditProto","ovEditDept"].forEach(closeOv);
+  }
+});
+
+// --- INIT -------------------------------------------------
+initAuth();
+renderHome();
+</script>
+</body>
+</html>
